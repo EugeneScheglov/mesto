@@ -17,6 +17,5 @@ export default class UserInfo {
     setUserInfo(data) {
         this.profileTitle.innerText = data.popup_name;
         this.profileSubtitle.innerText = data.popup_job;
-        
     }
 }

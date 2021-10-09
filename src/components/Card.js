@@ -25,7 +25,7 @@ export default class Card {
     this._cardTitle = this._element.querySelector(".card__info");
     this._cardLike = this._element.querySelector(".card__button-like");
     this._setEventListeners();
-    
+
     this._cardImage.src = this._image;
     this._cardImage.alt = this._text;
     this._cardTitle.textContent = this._text;
