@@ -1,12 +1,9 @@
-// import {
-//     elementTemplate,
-//   } from "../utils/constants.js";
-
 export default class Card {
   constructor({
     data,
     handleCardClick
   }, selector) {
+    console.log(data);
     this._text = data.name;
     this._image = data.link;
     this._selector = selector;
@@ -29,7 +26,7 @@ export default class Card {
     this._cardTitle = this._element.querySelector(".card__info");
     this._cardLike = this._element.querySelector(".card__button-like");
     this._setEventListeners();
-
+    
     this._cardImage.src = this._image;
     this._cardImage.alt = this._text;
     this._cardTitle.textContent = this._text;

@@ -43,5 +43,8 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin()
-      ] 
+      ],
+        optimization: {
+          minimize:false
+        }
   };

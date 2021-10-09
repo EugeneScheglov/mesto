@@ -9,13 +9,14 @@ export default class UserInfo {
 
     getUserInfo() {
         return {
-            profileName: this.profileTitle.textContent,
-            profileJob: this.profileSubtitle.textContent
+            profileName: this.profileTitle.innerText,
+            profileJob: this.profileSubtitle.innerText
         }
     }
 
     setUserInfo(data) {
-        this.profileTitle.textContent = data.profileName;
-        this.profileSubtitle.textContent = data.profileJob;
+        this.profileTitle.innerText = data.popup_name;
+        this.profileSubtitle.innerText = data.popup_job;
+        
     }
 }

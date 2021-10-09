@@ -2,6 +2,7 @@ export const elementTemplate = document.querySelector("#element").content;
 export const popupViewerImage = document.querySelector(".popup__viewer_image");
 export const popupViewerTitle = document.querySelector(".popup__viewer_title");
 export const popupImage = document.querySelector(".popup_image");
+export const popupInput = document.querySelector(".popup__text");
 export const profileEdit = document.querySelector(".profile__edit-button");
 export const popupProfile = document.querySelector(".popup_profile");
 export const profileContainer = document.querySelector(".popup__container_profile");

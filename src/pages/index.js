@@ -1,5 +1,5 @@
 // IMPORT'S //
-import { 
+import {
   profileEdit,
   nameInput,
   jobInput,
@@ -10,21 +10,21 @@ import {
   formCreate,
   formProfile,
   initialCards,
-  validateObject 
-} from "../utils/utilities";
+  validateObject
+} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import './index.css'; 
+import './index.css';
 
 // Функционал Профиля //
 const userInfo = new UserInfo({
   profileTitle: profileName,
   profileSubtitle: profileJob
-}); 
+});
 
 const setInfo = () => {
   const userItems = userInfo.getUserInfo();
@@ -36,6 +36,7 @@ const setInfo = () => {
 const profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: (data) => {
+    console.log(data);
     userInfo.setUserInfo(data);
     profileSample.close();
   }
@@ -51,7 +52,7 @@ profileEdit.addEventListener("click", () => {
 // Создание карточки //
 const createCard = (item) => {
   const card = new Card({
-    data: item, 
+    data: item,
     handleCardClick: () => {
       cardImagePopup.open(item);
     }
@@ -83,8 +84,8 @@ const createSample = new PopupWithForm({
   popupSelector: ".popup_create",
   handleSubmitForm: (data) => {
     const cardObj = {};
-    cardObj.name = data.cardName;
-    cardObj.link = data.cardUrl;
+    cardObj.name = data.name;
+    cardObj.link = data.link;
     const cardElement = createCard(cardObj);
     cardList.addItem(cardElement);
     createSample.close();
