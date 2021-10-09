@@ -3,7 +3,6 @@ export default class Card {
     data,
     handleCardClick
   }, selector) {
-    console.log(data);
     this._text = data.name;
     this._image = data.link;
     this._selector = selector;

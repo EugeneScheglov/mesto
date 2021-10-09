@@ -36,7 +36,6 @@ const setInfo = () => {
 const profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: (data) => {
-    console.log(data);
     userInfo.setUserInfo(data);
     profileSample.close();
   }
