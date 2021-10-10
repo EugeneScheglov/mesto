@@ -7,6 +7,7 @@ var elementTemplate = document.querySelector("#element").content;
 var popupViewerImage = document.querySelector(".popup__viewer_image");
 var popupViewerTitle = document.querySelector(".popup__viewer_title");
 var popupImage = document.querySelector(".popup_image");
+var popupAvatar = document.querySelector(".popup_avatar");
 var popupInput = document.querySelector(".popup__text");
 var profileEdit = document.querySelector(".profile__edit-button");
 var popupProfile = document.querySelector(".popup_profile");
