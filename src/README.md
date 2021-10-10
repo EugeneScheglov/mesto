@@ -27,7 +27,7 @@
 * Webpack
 
 
-**ссылка**
+**ссылки на проект**
 
 __[GitHub]__ https://github.com/EugeneScheglov/mesto
 __[DEPLOY]__ https://eugenescheglov.github.io/mesto/
