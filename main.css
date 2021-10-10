@@ -617,6 +617,18 @@
     }
 }
 
+.profile__avatar {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__avatar {
+        display: block;
+        margin: 0 auto;
+    }
+}
 .elements {
   margin: 0 auto;
   display: grid;
