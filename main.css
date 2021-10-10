@@ -481,7 +481,6 @@
         margin: 0 auto;
     }
 }
-
 .profile__edit-button {
     background-image: url(8667ac4a523e8fc42e59.svg);
     background-position: center;
@@ -725,7 +724,7 @@
     color: #000000;
     width: 22px;
     margin: 0;
-    margin-top: 1px;
+    margin-top: 3px;
 }
 .footer {
     margin: 65px 200px 60px;
