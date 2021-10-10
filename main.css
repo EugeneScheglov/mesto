@@ -712,6 +712,21 @@
 .card__trash-button:hover {
     opacity: 0.6;
   }
+.card__like-box {
+    display: flex;
+    flex-direction: column;
+}
+.card__like-count {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #000000;
+    width: 22px;
+    margin: 0;
+    margin-top: 3px;
+}
 .footer {
     margin: 65px 200px 60px;
     height: 18px;
