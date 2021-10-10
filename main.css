@@ -629,6 +629,20 @@
         margin: 0 auto;
     }
 }
+.profile__image-edit-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    left: 0;
+    top: 0;
+    padding: 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+    position: absolute;
+    transition: .2s;
+}
 .elements {
   margin: 0 auto;
   display: grid;
