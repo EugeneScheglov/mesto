@@ -28,6 +28,6 @@
 **ссылка**
 
 __[GitHub]__ https://github.com/EugeneScheglov/mesto
-__[WEB]__ https://eugenescheglov.github.io/mesto/
+__[DEPLOY]__ https://eugenescheglov.github.io/mesto/
 
 ![about-russia-travel](https://user-images.githubusercontent.com/83172101/126880813-9febd987-56c5-4432-9cc9-d2ad0e27485d.jpg)
