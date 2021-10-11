@@ -133,6 +133,7 @@ fetch('https://nomoreparties.co/v1/cohort-28/users/me').then(function (res) {
 }).catch(function (err) {
   console.log('Ошибка. Запрос не выполнен: ', err);
 });
+fetch('https://nomoreparties.co/v1/cohort-28/users/me');
 
 /***/ })
 
