@@ -78,6 +78,13 @@ var Card = /*#__PURE__*/function () {
   }
 
   _createClass(Card, [{
+    key: "_hideDeleteButton",
+    value: function _hideDeleteButton() {
+      if (this._myUserId !== this._userId) {
+        this._deleteButton.hidden = true;
+      }
+    }
+  }, {
     key: "_getElement",
     value: function _getElement() {
       var cardElement = document.querySelector(this._selector).content.querySelector(".card").cloneNode(true);
@@ -745,21 +752,22 @@ var Api = /*#__PURE__*/function () {
 
   return Api;
 }(); //fetch//
+// fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
+//         headers: {
+//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+//         }
+//     })
+//     .then(res => res.json())
+//     .then((result) => {
+//         console.log(result);
+//     });
+// fetch('https://nomoreparties.co/v1/cohort-28/users/me')
+//     .then(res => {
+//         console.log(res);
+//     });
 
 
 
-fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
-  headers: {
-    authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-  }
-}).then(function (res) {
-  return res.json();
-}).then(function (result) {
-  console.log(result);
-});
-fetch('https://nomoreparties.co/v1/cohort-28/users/me').then(function (res) {
-  console.log(res);
-});
 ;// CONCATENATED MODULE: ./src/pages/index.js
 // IMPORT'S //
 
