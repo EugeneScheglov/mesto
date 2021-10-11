@@ -842,7 +842,7 @@ var createCard = function createCard(item) {
 var cardList = new Section({
   renderer: function renderer(item) {
     var cardElement = createCard(item);
-    var cardLikesCount = cardElement.querySelector('.element__like-count');
+    var cardLikesCount = cardElement.querySelector('.card__like-count');
     cardLikesCount.textContent = item.likes.length;
     cardList.addItem(cardElement, 'append');
   }
