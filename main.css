@@ -619,20 +619,18 @@
 }
 
 .profile__avatar {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    background-size: cover;
+    position: relative;
 }
 
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
     .profile__avatar {
         display: block;
         margin: 0 auto;
     }
-}
+} */
 .profile__image-edit-button {
     background-color: transparent;
+    position: absolute;
     border: none;
     border-radius: 50%;
     height: 120px;
