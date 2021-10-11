@@ -26,7 +26,7 @@ var popupInputTextUrl = document.querySelector(".popup__text_url");
 var formCreate = document.forms.create;
 var formProfile = document.forms.profile; // Фото карты //
 
-var constants_initialCards = [{
+var initialCards = [{
   name: "Архыз",
   link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
 }, {
@@ -769,7 +769,7 @@ var Api = /*#__PURE__*/function () {
 
 
 ;// CONCATENATED MODULE: ./src/pages/index.js
-// IMPORT'S //
+// IMPORT //
 
 
 
@@ -781,14 +781,14 @@ var Api = /*#__PURE__*/function () {
 
  // API //
 
-var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Инфа с сервера //
+var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // инфо пользователя с сервера //
 
 api.getUserInfo().then(function (res) {
   profileName.textContent = res.name;
   profileJob.textContent = res.about;
   profileAvatar.src = res.avatar;
 }).then(function () {
-  // Выгрузка карточки с сервера //
+  // карточки с сервера //
   api.getCards().then(function (arrayCards) {
     cardList.renderItems(arrayCards);
   }).catch(function (err) {
@@ -814,6 +814,7 @@ var profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: function handleSubmitForm(data) {
     userInfo.setUserInfo(data);
+    api.updateUserInfo(profileName, profileJob);
     profileSample.close();
   }
 });
@@ -827,35 +828,35 @@ profileEdit.addEventListener("click", function () {
 var createCard = function createCard(item) {
   var card = new Card({
     data: item,
+    openPopupWithDelete: function openPopupWithDelete(deleteImage) {
+      deleteSample.open(item._id, deleteImage);
+    },
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
     }
   }, '#element');
   return card.generate();
-};
+}; // Создание карточки из коробки //
 
-var cardImagePopup = new PopupWithImage('.popup_image');
-cardImagePopup.setEventListeners();
+
 var cardList = new Section({
-  items: initialCards,
   renderer: function renderer(item) {
     var cardElement = createCard(item);
-    cardList.addItem(cardElement);
+    var cardLikesCount = cardElement.querySelector('.element__like-count');
+    cardLikesCount.textContent = item.likes.length;
+    cardList.addItem(cardElement, 'append');
   }
-}, cardContainer);
-cardList.renderItems(); // Подгрузка карточки с сервера //
+}, cardContainer); // карточки с сервера //
 
 api.getCards().then(function (arrayCards) {
   console.log(arrayCards);
   cardList.renderItems(arrayCards);
 }).catch(function (err) {
   console.error(err);
-}); // классы для валидации форм //
+}); //Экземепляр с картинкой //
 
-var validFormCreate = new FormValidator(validateObject, formCreate);
-validFormCreate.enableValidation();
-var validFormProfile = new FormValidator(validateObject, formProfile);
-validFormProfile.enableValidation(); // Добавление Нового Места //
+var cardImagePopup = new PopupWithImage('.popup_image');
+cardImagePopup.setEventListeners(); // Добавление Нового Места //
 
 var createSample = new PopupWithForm({
   popupSelector: ".popup_create",
@@ -863,16 +864,18 @@ var createSample = new PopupWithForm({
     var cardObj = {};
     cardObj.name = data.name;
     cardObj.link = data.link;
-    var cardElement = createCard(cardObj);
-    cardList.addItem(cardElement);
-    createSample.close();
+    api.updateCards(cardObj.name, cardObj.link).then(function (res) {
+      var card = createCard(res);
+      cardList.addItem(card, 'prepend');
+      createSample.close();
+    });
   }
 });
 createSample.setEventListeners();
 createPopupOpenButton.addEventListener("click", function (evt) {
   validFormCreate.resetValidation();
   createSample.open();
-}); // Модалка удаления карточки //
+}); // удаления карточки //
 
 var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
@@ -883,6 +886,11 @@ var deleteSample = new PopupWithDelete({
     });
   }
 });
-deleteSample.setEventListeners();
+deleteSample.setEventListeners(); // классы для валидации форм //
+
+var validFormCreate = new FormValidator(validateObject, formCreate);
+validFormCreate.enableValidation();
+var validFormProfile = new FormValidator(validateObject, formProfile);
+validFormProfile.enableValidation();
 /******/ })()
 ;
