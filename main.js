@@ -1,209 +1,6 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 240:
-/***/ (() => {
-
-// export default class Api {
-//     constructor(url) {
-//         this.url = url;
-//     }
-//     getUserInfo() {
-//         return fetch(this.url + '/users/me', {
-//             headers: {
-//                 authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-//               }
-//         })
-//         .then(res => {
-//             if (res.ok){
-//               return res.json();
-//             } else {
-//               throw  new Error (`Error ${res.status}`);
-//             }
-//           })
-//           .catch(err => {
-//             console.error(err);
-//           })
-//     }
-//     getCards() {
-//         return fetch(this.url + '/cards', {
-//             headers: {
-//                 authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-//               }
-//         })
-//         .then(res => {
-//             if (res.ok){
-//               return res.json();
-//             } else {
-//               throw  new Error (`Error ${res.status}`);
-//             }
-//           })
-//           .catch(err => {
-//             console.error(err);
-//           });
-//     }
-//     updateUserInfo(name, about) {
-//         return fetch(this.url + '/users/me', {
-//             method: 'PATCH',
-//             headers: {
-//                 authorization: '1e53c369-0342-4013-857c-26a049ec0854',
-//                 'Content-Type': 'application/json'
-//               },
-//               body: JSON.stringify({
-//                 name: name.textContent,
-//                 about: about.textContent
-//             })
-//         })
-//         .then(res => {
-//           if (res.ok){
-//             return res.json();
-//           } else {
-//             throw  new Error (`Error ${res.status}`);
-//           }
-//         })
-//         .catch(err => {
-//             console.error(err);
-//           });
-//     }
-//     updateCards(name, link){
-//         return fetch(this.url + '/cards', {
-//             method: 'POST',
-//             headers: {
-//                 authorization: '1e53c369-0342-4013-857c-26a049ec0854',
-//                 'Content-Type': 'application/json'
-//               },
-//               body: JSON.stringify({
-//                   name: name,
-//                   link: link
-//               })
-//         })
-//         .then(res => {
-//           if (res.ok){
-//             return res.json();
-//           } else {
-//             throw  new Error (`Error ${res.status}`);
-//           }
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         })
-//     }
-//     removeCard(cardId){
-//       return fetch(this.url + `/cards/${cardId}`,{
-//         method: 'DELETE',
-//         headers: {
-//           authorization: '1e53c369-0342-4013-857c-26a049ec0854',
-//         }
-//       })
-//       .then(res => {
-//         if (res.ok){
-//           return res.json();
-//         } else {
-//           throw  new Error (`Error ${res.status}`);
-//         }
-//       })
-//       .catch(err => {
-//         console.error(err);
-//     })
-//     }
-// }
-// fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
-//         headers: {
-//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-//         }
-//     })
-//     .then(res => res.json())
-//     .then((result) => {
-//         console.log(result);
-//     });
-// fetch('https://nomoreparties.co/v1/cohort-28/users/me', {
-//         method: 'GET',
-//         headers: {
-//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-//         }
-//     })
-//     .then(res => res.json())
-//     .then((result) => {
-//         console.log(result);
-//     });
-// fetch('https://nomoreparties.co/v1/cohort-28/users/me')
-//     .then((res) => {
-//         return res.json();
-//     })
-//     .then((data) => {
-//         console.log(data.user.name); // если мы попали в этот then, data — это объект
-//     })
-//     .catch((err) => {
-//         console.log('Ошибка. Запрос не выполнен: ', err);
-//     });
-//     fetch('https://nomoreparties.co/v1/cohort-28/users/me');
-fetch('https://nomoreparties.co/v1/cohort-28/users/me').then(function (res) {
-  console.log(res);
-});
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/************************************************************************/
+/******/ 	"use strict";
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
 
 ;// CONCATENATED MODULE: ./src/utils/constants.js
 var elementTemplate = document.querySelector("#element").content;
@@ -264,77 +61,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// export default class Card {
-//   constructor({
-//     data,
-//     handleCardClick
-//   }, selector) {
-//     this._text = data.name;
-//     this._image = data.link;
-//     this._cardId = data._id;
-//     this._userId = data.owner._id;
-//     this._myUserId = "fdd469b9fcfa8739145a843b";
-//     this._selector = selector;
-//     this.handleCardClick = handleCardClick;
-//   }
-//   _getElement() {
-//     const cardElement =
-//       document
-//       .querySelector(this._selector).content
-//       .querySelector(".card")
-//       .cloneNode(true);
-//     return cardElement;
-//   }
-//   generate() {
-//     this._element = this._getElement();
-//     this._cardImage = this._element.querySelector(".card__image");
-//     this._cardTitle = this._element.querySelector(".card__info");
-//     this._cardLike = this._element.querySelector(".card__button-like");
-//     this._setEventListeners();
-//     this._cardImage.src = this._image;
-//     this._cardImage.alt = this._text;
-//     this._cardTitle.textContent = this._text;
-//     return this._element;
-//   }
-//   _setEventListeners() {
-//     this._likeSetEventListeners();
-//     this._imageSetEventListeners();
-//     this._deleteSetEventListeners();
-//   }
-//   _imageSetEventListeners() {
-//     this._cardImage
-//       .addEventListener("click", () => {
-//         this.handleCardClick();
-//       });
-//   }
-//   _deleteSetEventListeners() {
-//     this._element
-//       .querySelector(".card__trash-button")
-//       .addEventListener("click", () => {
-//         this._handleDeleteImage();
-//       });
-//   }
-//   _handleDeleteImage() {
-//     if (this._element.closest(".card")) {
-//       this._element.remove();
-//       this._element = null;
-//     }
-//   }
-//   _likeSetEventListeners() {
-//     this._cardLike
-//       .addEventListener("click", () => {
-//         this._likeHandleClick();
-//       });
-//   }
-//   _likeHandleClick() {
-//     this._cardLike
-//       .classList.toggle("card__button-like_active");
-//   }
-// }
 var Card = /*#__PURE__*/function () {
   function Card(_ref, selector) {
     var data = _ref.data,
-        openPopupWithDelete = _ref.openPopupWithDelete,
         handleCardClick = _ref.handleCardClick;
 
     _classCallCheck(this, Card);
@@ -343,20 +72,12 @@ var Card = /*#__PURE__*/function () {
     this._image = data.link;
     this._cardId = data._id;
     this._userId = data.owner._id;
-    this._myUserId = "";
+    this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
-    this._openPopupWithDelete = openPopupWithDelete;
   }
 
   _createClass(Card, [{
-    key: "_hideDeleteButton",
-    value: function _hideDeleteButton() {
-      if (this._myUserId !== this._userId) {
-        this._deleteButton.hidden = true;
-      }
-    }
-  }, {
     key: "_getElement",
     value: function _getElement() {
       var cardElement = document.querySelector(this._selector).content.querySelector(".card").cloneNode(true);
@@ -367,9 +88,8 @@ var Card = /*#__PURE__*/function () {
     value: function generate() {
       this._element = this._getElement();
       this._cardImage = this._element.querySelector(".card__image");
-      this._cardTitle = this._element.querySelector(".card__title");
+      this._cardTitle = this._element.querySelector(".card__info");
       this._cardLike = this._element.querySelector(".card__button-like");
-      this._deleteButton = this._element.querySelector(".card__trash-button");
 
       this._setEventListeners();
 
@@ -386,8 +106,6 @@ var Card = /*#__PURE__*/function () {
       this._imageSetEventListeners();
 
       this._deleteSetEventListeners();
-
-      this._hideDeleteButton();
     }
   }, {
     key: "_imageSetEventListeners",
@@ -403,15 +121,17 @@ var Card = /*#__PURE__*/function () {
     value: function _deleteSetEventListeners() {
       var _this2 = this;
 
-      this._deleteButton.addEventListener("click", function () {
-        _this2._openPopupWithDelete(_this2.handleDeleteImage);
+      this._element.querySelector(".card__trash-button").addEventListener("click", function () {
+        _this2._handleDeleteImage();
       });
     }
   }, {
-    key: "handleDeleteImage",
-    value: function handleDeleteImage() {
+    key: "_handleDeleteImage",
+    value: function _handleDeleteImage() {
       if (this._element.closest(".card")) {
         this._element.remove();
+
+        this._element = null;
       }
     }
   }, {
@@ -909,9 +629,137 @@ var UserInfo = /*#__PURE__*/function () {
 }();
 
 
-// EXTERNAL MODULE: ./src/components/Api.js
-var Api = __webpack_require__(240);
-var Api_default = /*#__PURE__*/__webpack_require__.n(Api);
+;// CONCATENATED MODULE: ./src/components/Api.js
+function Api_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Api_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Api_createClass(Constructor, protoProps, staticProps) { if (protoProps) Api_defineProperties(Constructor.prototype, protoProps); if (staticProps) Api_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Api = /*#__PURE__*/function () {
+  function Api(url) {
+    Api_classCallCheck(this, Api);
+
+    this.url = url;
+  }
+
+  Api_createClass(Api, [{
+    key: "getUserInfo",
+    value: function getUserInfo() {
+      return fetch(this.url + '/users/me', {
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "getCards",
+    value: function getCards() {
+      return fetch(this.url + '/cards', {
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "updateUserInfo",
+    value: function updateUserInfo(name, about) {
+      return fetch(this.url + '/users/me', {
+        method: 'PATCH',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.textContent,
+          about: about.textContent
+        })
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "updateCards",
+    value: function updateCards(name, link) {
+      return fetch(this.url + '/cards', {
+        method: 'POST',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          link: link
+        })
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "removeCard",
+    value: function removeCard(cardId) {
+      return fetch(this.url + "/cards/".concat(cardId), {
+        method: 'DELETE',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }]);
+
+  return Api;
+}(); //fetch//
+
+
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
+  headers: {
+    authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+  }
+}).then(function (res) {
+  return res.json();
+}).then(function (result) {
+  console.log(result);
+});
+fetch('https://nomoreparties.co/v1/cohort-28/users/me').then(function (res) {
+  console.log(res);
+});
 ;// CONCATENATED MODULE: ./src/pages/index.js
 // IMPORT'S //
 
@@ -925,7 +773,7 @@ var Api_default = /*#__PURE__*/__webpack_require__.n(Api);
 
  // API //
 
-var api = new (Api_default())('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Инфа с сервера //
+var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Инфа с сервера //
 
 api.getUserInfo().then(function (res) {
   profileName.textContent = res.name;
@@ -1028,7 +876,5 @@ var deleteSample = new PopupWithDelete({
   }
 });
 deleteSample.setEventListeners();
-})();
-
 /******/ })()
 ;
