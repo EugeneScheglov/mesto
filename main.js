@@ -107,33 +107,39 @@
 //     })
 //     }
 // }
-fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
-  headers: {
-    authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-  }
-}).then(function (res) {
-  return res.json();
-}).then(function (result) {
-  console.log(result);
-});
-fetch('https://nomoreparties.co/v1/cohort-28/users/me', {
-  method: 'GET',
-  headers: {
-    authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-  }
-}).then(function (res) {
-  return res.json();
-}).then(function (result) {
-  console.log(result);
-});
+// fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
+//         headers: {
+//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+//         }
+//     })
+//     .then(res => res.json())
+//     .then((result) => {
+//         console.log(result);
+//     });
+// fetch('https://nomoreparties.co/v1/cohort-28/users/me', {
+//         method: 'GET',
+//         headers: {
+//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+//         }
+//     })
+//     .then(res => res.json())
+//     .then((result) => {
+//         console.log(result);
+//     });
+// fetch('https://nomoreparties.co/v1/cohort-28/users/me')
+//     .then((res) => {
+//         return res.json();
+//     })
+//     .then((data) => {
+//         console.log(data.user.name); // если мы попали в этот then, data — это объект
+//     })
+//     .catch((err) => {
+//         console.log('Ошибка. Запрос не выполнен: ', err);
+//     });
+//     fetch('https://nomoreparties.co/v1/cohort-28/users/me');
 fetch('https://nomoreparties.co/v1/cohort-28/users/me').then(function (res) {
-  return res.json();
-}).then(function (data) {
-  console.log(data.user.name); // если мы попали в этот then, data — это объект
-}).catch(function (err) {
-  console.log('Ошибка. Запрос не выполнен: ', err);
+  console.log(res);
 });
-fetch('https://nomoreparties.co/v1/cohort-28/users/me');
 
 /***/ })
 
