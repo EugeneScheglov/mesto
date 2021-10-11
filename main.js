@@ -7,7 +7,7 @@ var elementTemplate = document.querySelector("#element").content;
 var popupViewerImage = document.querySelector(".popup__viewer_image");
 var popupViewerTitle = document.querySelector(".popup__viewer_title");
 var popupImage = document.querySelector(".popup_image");
-var popupAvatar = document.querySelector(".popup_avatar");
+var profileAvatar = document.querySelector(".profile__avatar");
 var popupInput = document.querySelector(".popup__text");
 var profileEdit = document.querySelector(".profile__edit-button");
 var popupProfile = document.querySelector(".popup_profile");
@@ -26,7 +26,7 @@ var popupInputTextUrl = document.querySelector(".popup__text_url");
 var formCreate = document.forms.create;
 var formProfile = document.forms.profile; // Фото карты //
 
-var initialCards = [{
+var constants_initialCards = [{
   name: "Архыз",
   link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
 }, {
@@ -497,6 +497,81 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
 }(Popup);
 
 
+;// CONCATENATED MODULE: ./src/components/PopupWithDelete.js
+function PopupWithDelete_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { PopupWithDelete_typeof = function _typeof(obj) { return typeof obj; }; } else { PopupWithDelete_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return PopupWithDelete_typeof(obj); }
+
+function PopupWithDelete_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function PopupWithDelete_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function PopupWithDelete_createClass(Constructor, protoProps, staticProps) { if (protoProps) PopupWithDelete_defineProperties(Constructor.prototype, protoProps); if (staticProps) PopupWithDelete_defineProperties(Constructor, staticProps); return Constructor; }
+
+function PopupWithDelete_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { PopupWithDelete_get = Reflect.get; } else { PopupWithDelete_get = function _get(target, property, receiver) { var base = PopupWithDelete_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return PopupWithDelete_get(target, property, receiver || target); }
+
+function PopupWithDelete_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = PopupWithDelete_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function PopupWithDelete_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) PopupWithDelete_setPrototypeOf(subClass, superClass); }
+
+function PopupWithDelete_setPrototypeOf(o, p) { PopupWithDelete_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return PopupWithDelete_setPrototypeOf(o, p); }
+
+function PopupWithDelete_createSuper(Derived) { var hasNativeReflectConstruct = PopupWithDelete_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = PopupWithDelete_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = PopupWithDelete_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return PopupWithDelete_possibleConstructorReturn(this, result); }; }
+
+function PopupWithDelete_possibleConstructorReturn(self, call) { if (call && (PopupWithDelete_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return PopupWithDelete_assertThisInitialized(self); }
+
+function PopupWithDelete_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function PopupWithDelete_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function PopupWithDelete_getPrototypeOf(o) { PopupWithDelete_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return PopupWithDelete_getPrototypeOf(o); }
+
+
+
+var PopupWithDelete = /*#__PURE__*/function (_Popup) {
+  PopupWithDelete_inherits(PopupWithDelete, _Popup);
+
+  var _super = PopupWithDelete_createSuper(PopupWithDelete);
+
+  function PopupWithDelete(_ref) {
+    var _this;
+
+    var popupSelector = _ref.popupSelector,
+        deleteApiRequest = _ref.deleteApiRequest;
+
+    PopupWithDelete_classCallCheck(this, PopupWithDelete);
+
+    _this = _super.call(this, popupSelector);
+    _this._deleteApiRequest = deleteApiRequest;
+    _this._form = _this._popup.querySelector('.popup__form');
+    return _this;
+  }
+
+  PopupWithDelete_createClass(PopupWithDelete, [{
+    key: "open",
+    value: function open(cardId, deleteImage) {
+      PopupWithDelete_get(PopupWithDelete_getPrototypeOf(PopupWithDelete.prototype), "open", this).call(this);
+
+      this._cardId = cardId;
+      this._deleteImage = deleteImage;
+    }
+  }, {
+    key: "setEventListeners",
+    value: function setEventListeners() {
+      var _this2 = this;
+
+      PopupWithDelete_get(PopupWithDelete_getPrototypeOf(PopupWithDelete.prototype), "setEventListeners", this).call(this);
+
+      this._form.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+
+        _this2._deleteApiRequest(_this2._cardId, _this2._deleteImage);
+      });
+    }
+  }]);
+
+  return PopupWithDelete;
+}(Popup);
+
+
 ;// CONCATENATED MODULE: ./src/components/UserInfo.js
 function UserInfo_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -535,6 +610,124 @@ var UserInfo = /*#__PURE__*/function () {
 }();
 
 
+;// CONCATENATED MODULE: ./src/components/Api.js
+function Api_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Api_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Api_createClass(Constructor, protoProps, staticProps) { if (protoProps) Api_defineProperties(Constructor.prototype, protoProps); if (staticProps) Api_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Api = /*#__PURE__*/function () {
+  function Api(url) {
+    Api_classCallCheck(this, Api);
+
+    this.url = url;
+  }
+
+  Api_createClass(Api, [{
+    key: "getUserInfo",
+    value: function getUserInfo() {
+      return fetch(this.url + '/users/me', {
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "getCards",
+    value: function getCards() {
+      return fetch(this.url + '/cards', {
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "updateUserInfo",
+    value: function updateUserInfo(name, about) {
+      return fetch(this.url + '/users/me', {
+        method: 'PATCH',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.textContent,
+          about: about.textContent
+        })
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "updateCards",
+    value: function updateCards(name, link) {
+      return fetch(this.url + '/cards', {
+        method: 'POST',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          link: link
+        })
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }, {
+    key: "removeCard",
+    value: function removeCard(cardId) {
+      return fetch(this.url + "/cards/".concat(cardId), {
+        method: 'DELETE',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
+    }
+  }]);
+
+  return Api;
+}();
+
+
 ;// CONCATENATED MODULE: ./src/pages/index.js
 // IMPORT'S //
 
@@ -544,7 +737,26 @@ var UserInfo = /*#__PURE__*/function () {
 
 
 
- // Функционал Профиля //
+
+
+ // API //
+
+var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Инфа с сервера //
+
+api.getUserInfo().then(function (res) {
+  profileName.textContent = res.name;
+  profileJob.textContent = res.about;
+  profileAvatar.src = res.avatar;
+}).then(function () {
+  // Выгрузка карточки с сервера //
+  api.getCards().then(function (arrayCards) {
+    cardList.renderItems(arrayCards);
+  }).catch(function (err) {
+    console.error(err);
+  });
+}).catch(function (err) {
+  console.error(err);
+}); // Функционал Профиля //
 
 var userInfo = new UserInfo({
   profileTitle: profileName,
@@ -591,7 +803,14 @@ var cardList = new Section({
     cardList.addItem(cardElement);
   }
 }, cardContainer);
-cardList.renderItems(); // классы для валидации форм //
+cardList.renderItems(); // Подгрузка карточки с сервера //
+
+api.getCards().then(function (arrayCards) {
+  console.log(arrayCards);
+  cardList.renderItems(arrayCards);
+}).catch(function (err) {
+  console.error(err);
+}); // классы для валидации форм //
 
 var validFormCreate = new FormValidator(validateObject, formCreate);
 validFormCreate.enableValidation();
@@ -613,6 +832,17 @@ createSample.setEventListeners();
 createPopupOpenButton.addEventListener("click", function (evt) {
   validFormCreate.resetValidation();
   createSample.open();
+}); // Модалка удаления карточки //
+
+var deleteSample = new PopupWithDelete({
+  popupSelector: ".popup_delete",
+  deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
+    api.removeCard(cardId).then(function () {
+      deleteImage();
+      deleteSample.close();
+    });
+  }
 });
+deleteSample.setEventListeners();
 /******/ })()
 ;
