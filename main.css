@@ -645,7 +645,7 @@
     transition: .2s;
 }
 
-.profile__avatar-edit-button:hover {
+.profile__image-edit-button:hover {
     background-color: rgba(0,0,0,.8);
     background-image: url(8667ac4a523e8fc42e59.svg);
     background-position: 50%;
