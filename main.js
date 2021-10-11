@@ -64,6 +64,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Card = /*#__PURE__*/function () {
   function Card(_ref, selector) {
     var data = _ref.data,
+        openPopupWithDelete = _ref.openPopupWithDelete,
         handleCardClick = _ref.handleCardClick;
 
     _classCallCheck(this, Card);
@@ -72,9 +73,10 @@ var Card = /*#__PURE__*/function () {
     this._image = data.link;
     this._cardId = data._id;
     this._userId = data.owner._id;
-    this._myUserId = "e3d187d5758c011e9e594e63";
+    this._myUserId = "fdd469b9fcfa8739145a843b";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
+    this._openPopupWithDelete = openPopupWithDelete;
   }
 
   _createClass(Card, [{
@@ -87,7 +89,7 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "_getElement",
     value: function _getElement() {
-      var cardElement = document.querySelector(this._selector).content.querySelector(".card").cloneNode(true);
+      var cardElement = document.querySelector(this._selector).content.querySelector(".element").cloneNode(true);
       return cardElement;
     }
   }, {
@@ -97,6 +99,7 @@ var Card = /*#__PURE__*/function () {
       this._cardImage = this._element.querySelector(".card__image");
       this._cardTitle = this._element.querySelector(".card__info");
       this._cardLike = this._element.querySelector(".card__button-like");
+      this._deleteButton = this._element.querySelector(".card__trash-button");
 
       this._setEventListeners();
 
@@ -113,6 +116,8 @@ var Card = /*#__PURE__*/function () {
       this._imageSetEventListeners();
 
       this._deleteSetEventListeners();
+
+      this._hideDeleteButton();
     }
   }, {
     key: "_imageSetEventListeners",
@@ -128,17 +133,15 @@ var Card = /*#__PURE__*/function () {
     value: function _deleteSetEventListeners() {
       var _this2 = this;
 
-      this._element.querySelector(".card__trash-button").addEventListener("click", function () {
-        _this2._handleDeleteImage();
+      this._deleteButton.addEventListener("click", function () {
+        _this2._openPopupWithDelete(_this2.handleDeleteImage);
       });
     }
   }, {
-    key: "_handleDeleteImage",
-    value: function _handleDeleteImage() {
+    key: "handleDeleteImage",
+    value: function handleDeleteImage() {
       if (this._element.closest(".card")) {
         this._element.remove();
-
-        this._element = null;
       }
     }
   }, {
@@ -270,24 +273,6 @@ function Section_defineProperties(target, props) { for (var i = 0; i < props.len
 
 function Section_createClass(Constructor, protoProps, staticProps) { if (protoProps) Section_defineProperties(Constructor.prototype, protoProps); if (staticProps) Section_defineProperties(Constructor, staticProps); return Constructor; }
 
-// export default class Section {
-//   constructor({
-//     items,
-//     renderer
-//   }, container) {
-//     this._renderedItems = items;
-//     this._renderer = renderer;
-//     this._container = container;
-//   }
-//   addItem(element) {
-//     this._container.prepend(element);
-//   }
-//   renderItems() {
-//     this._renderedItems.forEach(item => {
-//       this._renderer(item);
-//     });
-//   }
-// }
 var Section = /*#__PURE__*/function () {
   function Section(_ref, container) {
     var renderer = _ref.renderer;
@@ -748,24 +733,31 @@ var Api = /*#__PURE__*/function () {
         console.error(err);
       });
     }
+  }, {
+    key: "like",
+    value: function like(id) {
+      return fetch(this._url + "/cards/likes/".concat(id), {
+        method: 'PUT',
+        headers: this._headers
+      }).then(this._checkResponse);
+    }
+  }, {
+    key: "dislike",
+    value: function dislike(id) {
+      return fetch(this._url + "/cards/likes/".concat(id), {
+        method: 'DELETE',
+        headers: this._headers
+      }).then(this._checkResponse);
+    }
+  }, {
+    key: "getAllNeededData",
+    value: function getAllNeededData() {
+      return Promise.all([this.getInitialCards(), this.getUserInfo()]);
+    }
   }]);
 
   return Api;
-}(); //fetch//
-// fetch('https://mesto.nomoreparties.co/v1/cohort-28/cards', {
-//         headers: {
-//             authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-//         }
-//     })
-//     .then(res => res.json())
-//     .then((result) => {
-//         console.log(result);
-//     });
-// fetch('https://nomoreparties.co/v1/cohort-28/users/me')
-//     .then(res => {
-//         console.log(res);
-//     });
-
+}();
 
 
 ;// CONCATENATED MODULE: ./src/pages/index.js
