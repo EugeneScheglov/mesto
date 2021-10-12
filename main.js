@@ -97,8 +97,6 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "generate",
     value: function generate() {
-      var _this = this;
-
       this._element = this._getElement();
       this._cardImage = this._element.querySelector(".card__image");
       this._cardTitle = this._element.querySelector(".card__info");
@@ -110,16 +108,14 @@ var Card = /*#__PURE__*/function () {
       this._cardImage.src = this._image;
       this._cardImage.alt = this._text;
       this._cardTitle.textContent = this._text;
-      this._view.querySelector('.card__like-count').textContent = this._likes.length;
+      this._likeCounter.textContent = this._likes.length;
 
-      if (!(this._ownerId === this._userId)) {
-        this._view.querySelector('.card__trash-button').style.display = 'none';
+      if (this._isLiked) {
+        this.setLike();
       }
 
-      if (this._likes.find(function (obj) {
-        return _this._userId === obj._id;
-      })) {
-        this._view.querySelector('.card__button-like').classList.add('card__button-like_active');
+      if (!this._isMine) {
+        this._deleteBtn.classList.add("card__trash-button");
       }
 
       return this._element;
@@ -138,19 +134,19 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "_imageSetEventListeners",
     value: function _imageSetEventListeners() {
-      var _this2 = this;
+      var _this = this;
 
       this._cardImage.addEventListener("click", function () {
-        _this2.handleCardClick();
+        _this.handleCardClick();
       });
     }
   }, {
     key: "_deleteSetEventListeners",
     value: function _deleteSetEventListeners() {
-      var _this3 = this;
+      var _this2 = this;
 
       this._deleteButton.addEventListener("click", function () {
-        _this3._openPopupWithDelete(_this3.handleDeleteImage);
+        _this2._openPopupWithDelete(_this2.handleDeleteImage);
       });
     }
   }, {
@@ -165,10 +161,10 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "_likeSetEventListeners",
     value: function _likeSetEventListeners() {
-      var _this4 = this;
+      var _this3 = this;
 
       this._cardLike.addEventListener("click", function () {
-        _this4._likeHandleClick();
+        _this3._likeHandleClick();
       });
     }
   }, {
