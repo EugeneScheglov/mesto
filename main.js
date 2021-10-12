@@ -7,7 +7,7 @@ var elementTemplate = document.querySelector("#element").content;
 var popupViewerImage = document.querySelector(".popup__viewer_image");
 var popupViewerTitle = document.querySelector(".popup__viewer_title");
 var popupImage = document.querySelector(".popup_image");
-var popupAvatar = document.querySelector(".popup_avatar");
+var popupAvatar = document.querySelector(".profile__image-edit-button");
 var profileAvatar = document.querySelector(".profile__image");
 var popupInput = document.querySelector(".popup__text");
 var profileEdit = document.querySelector(".profile__edit-button");
@@ -815,7 +815,26 @@ var Api = /*#__PURE__*/function () {
 
  // API //
 
-var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // инфо пользователя с сервера //
+var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Avatar //
+// const popupAvatarEditFromValidator = new FormValidator(selectors, avatarEditForm)
+// popupAvatarEditFromValidator.enableValidation()
+// const popupAvatar = new PopupWithForm(popupAvatarEditSelector, newValues => {
+//   popupAvatar.renderLoading(true)
+//   api.handleUserAvatar(newValues)
+//     .then((data) => {
+//       userInfo.setUserAvatar(data)
+//       popupAvatarEditFromValidator.disableSubmitButton()
+//       popupAvatarEdit.close()
+//     })
+//     .catch((err) => console.log(err))
+//     .finally( _ => popupAvatarEdit.renderLoading(false))
+// })
+// popupAvatarEdit.setEventListeners()
+// avatarEditButton.addEventListener('click', _ => {
+//   popupAvatarEditFromValidator.removeErrors()
+//   popupAvatarEdit.open()
+// })
+// инфо пользователя с сервера //
 
 api.getUserInfo().then(function (res) {
   profileName.textContent = res.name;
@@ -877,12 +896,13 @@ var cardList = new Section({
   renderer: function renderer(item) {
     var cardElement = createCard(item);
     var cardLikesCount = cardElement.querySelector('.card__like-count');
-    cardLikesCount.textContent = item._likes.length;
+    cardLikesCount.textContent = item.likes.length;
     cardList.addItem(cardElement, 'append');
   }
 }, cardContainer); // карточки с сервера //
 
 api.getCards().then(function (arrayCards) {
+  console.log(arrayCards);
   cardList.renderItems(arrayCards);
 }).catch(function (err) {
   console.error(err);
