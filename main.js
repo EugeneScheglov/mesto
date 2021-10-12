@@ -909,9 +909,8 @@ createPopupOpenButton.addEventListener("click", function (evt) {
 
 var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
-  deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
-    console.log(cardId);
-    api.removeCard(cardId).then(function () {
+  deleteApiRequest: function deleteApiRequest(_id, deleteImage) {
+    api.removeCard(_id).then(function () {
       deleteImage();
       deleteSample.close();
     });
