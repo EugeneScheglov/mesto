@@ -914,7 +914,7 @@ var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
   deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
     api.removeCard(cardId).then(function () {
-      deleteImage(_id);
+      deleteImage();
       deleteSample.close();
     });
   }
