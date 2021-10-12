@@ -140,9 +140,9 @@ var Card = /*#__PURE__*/function () {
     }
   }, {
     key: "_handleDeleteImage",
-    value: function _handleDeleteImage() {
+    value: function _handleDeleteImage(cardId) {
       if (this._element.closest(".card")) {
-        this._element.remove();
+        this._element.remove(cardId);
 
         this._element = null;
       }
@@ -909,8 +909,8 @@ createPopupOpenButton.addEventListener("click", function (evt) {
 
 var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
-  deleteApiRequest: function deleteApiRequest(_id, deleteImage) {
-    api.removeCard(_id).then(function () {
+  deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
+    api.removeCard(cardId).then(function () {
       deleteImage();
       deleteSample.close();
     });
