@@ -790,10 +790,12 @@ var Api = /*#__PURE__*/function () {
       }).catch(function (err) {
         console.error(err);
       });
-    } // getAllNeededData() {
-    //     return Promise.all([this.getInitialCards(), this.getUserInfo()])
-    // }
-
+    }
+  }, {
+    key: "getAllNeededData",
+    value: function getAllNeededData() {
+      return Promise.all([this.getCards(), this.getUserInfo()]);
+    }
   }]);
 
   return Api;
