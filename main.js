@@ -719,8 +719,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "removeCard",
-    value: function removeCard(cardId) {
-      return fetch(this.url + "/cards/".concat(cardId), {
+    value: function removeCard(_id) {
+      return fetch(this.url + "/cards/".concat(_id), {
         method: 'DELETE',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
@@ -737,8 +737,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "like",
-    value: function like(id) {
-      return fetch(this._url + "/cards/likes/".concat(id), {
+    value: function like(_id) {
+      return fetch(this._url + "/cards/likes/".concat(_id), {
         method: 'PUT',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
