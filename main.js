@@ -737,8 +737,8 @@ var Api = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "like",
-    value: function like(id) {
+    key: "likeCard",
+    value: function likeCard(id) {
       return fetch(this.url + "/cards/likes/".concat(id), {
         method: 'PUT',
         headers: {
@@ -911,7 +911,7 @@ var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
   deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
     api.removeCard(cardId).then(function () {
-      deleteImage();
+      deleteImage(cardId);
       deleteSample.close();
     });
   }
