@@ -738,16 +738,36 @@ var Api = /*#__PURE__*/function () {
     value: function like(id) {
       return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'PUT',
-        headers: this._headers
-      }).then(this._checkResponse);
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
     }
   }, {
     key: "dislike",
     value: function dislike(id) {
       return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'DELETE',
-        headers: this._headers
-      }).then(this._checkResponse);
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
     }
   }, {
     key: "getAllNeededData",
