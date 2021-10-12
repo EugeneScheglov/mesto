@@ -89,7 +89,7 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "_getElement",
     value: function _getElement() {
-      var cardElement = document.querySelector(this._selector).content.querySelector(".element").cloneNode(true);
+      var cardElement = document.querySelector(this._selector).content.querySelector(".card").cloneNode(true);
       return cardElement;
     }
   }, {
