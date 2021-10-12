@@ -752,8 +752,8 @@ var Api = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "likeCard",
-    value: function likeCard(id) {
+    key: "like",
+    value: function like(id) {
       return fetch(this.url + "/cards/likes/".concat(id), {
         method: 'PUT',
         headers: {
@@ -889,7 +889,7 @@ var cardList = new Section({
   renderer: function renderer(item) {
     var cardElement = createCard(item);
     var cardLikesCount = cardElement.querySelector('.card__like-count');
-    cardLikesCount.textContent = item.likes.length;
+    cardLikesCount.textContent = item._likes.length;
     cardList.addItem(cardElement, 'append');
   }
 }, cardContainer); // карточки с сервера //
@@ -926,7 +926,7 @@ var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
   deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
     api.removeCard(cardId).then(function () {
-      deleteImage(cardId);
+      deleteImage(_id);
       deleteSample.close();
     });
   }
