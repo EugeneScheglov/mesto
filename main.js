@@ -768,12 +768,10 @@ var Api = /*#__PURE__*/function () {
       }).catch(function (err) {
         console.error(err);
       });
-    }
-  }, {
-    key: "getAllNeededData",
-    value: function getAllNeededData() {
-      return Promise.all([this.getInitialCards(), this.getUserInfo()]);
-    }
+    } // getAllNeededData() {
+    //     return Promise.all([this.getInitialCards(), this.getUserInfo()])
+    // }
+
   }]);
 
   return Api;
