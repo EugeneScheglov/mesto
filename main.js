@@ -138,10 +138,12 @@ var Card = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "handleDeleteImage",
-    value: function handleDeleteImage() {
+    key: "_handleDeleteImage",
+    value: function _handleDeleteImage() {
       if (this._element.closest(".card")) {
         this._element.remove();
+
+        this._element = null;
       }
     }
   }, {
@@ -768,6 +770,24 @@ var Api = /*#__PURE__*/function () {
       }).catch(function (err) {
         console.error(err);
       });
+    }
+  }, {
+    key: "handleUserAvatar",
+    value: function handleUserAvatar(data) {
+      return fetch(this._url + "/users/me/avatar", {
+        method: 'PATCH',
+        headers: {
+          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
+        }
+      }).then(function (res) {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Error ".concat(res.status));
+        }
+      }).catch(function (err) {
+        console.error(err);
+      });
     } // getAllNeededData() {
     //     return Promise.all([this.getInitialCards(), this.getUserInfo()])
     // }
@@ -859,7 +879,6 @@ var cardList = new Section({
 }, cardContainer); // карточки с сервера //
 
 api.getCards().then(function (arrayCards) {
-  console.log(arrayCards);
   cardList.renderItems(arrayCards);
 }).catch(function (err) {
   console.error(err);
@@ -890,6 +909,7 @@ createPopupOpenButton.addEventListener("click", function (evt) {
 var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
   deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
+    console.log(cardId);
     api.removeCard(cardId).then(function () {
       deleteImage();
       deleteSample.close();
