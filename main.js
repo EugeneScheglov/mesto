@@ -108,16 +108,6 @@ var Card = /*#__PURE__*/function () {
       this._cardImage.src = this._image;
       this._cardImage.alt = this._text;
       this._cardTitle.textContent = this._text;
-      this._likeCounter.textContent = this._likes.length;
-
-      if (this._isLiked) {
-        this.setLike();
-      }
-
-      if (!this._isMine) {
-        this._deleteBtn.classList.add("card__trash-button");
-      }
-
       return this._element;
     }
   }, {
