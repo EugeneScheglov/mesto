@@ -72,8 +72,8 @@ var Card = /*#__PURE__*/function () {
 
     this._text = data.name;
     this._image = data.link;
-    this._cardId = data._id;
-    this._userId = data.owner._id;
+    this._cardId = data.id;
+    this._userId = data.owner.id;
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
@@ -720,8 +720,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "removeCard",
-    value: function removeCard(_id) {
-      return fetch(this.url + "/cards/".concat(_id), {
+    value: function removeCard(cardId) {
+      return fetch(this.url + "/cards/".concat(cardId), {
         method: 'DELETE',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
@@ -738,8 +738,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "like",
-    value: function like(_id) {
-      return fetch(this._url + "/cards/likes/".concat(_id), {
+    value: function like(id) {
+      return fetch(this.url + "/cards/likes/".concat(id), {
         method: 'PUT',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
@@ -757,7 +757,7 @@ var Api = /*#__PURE__*/function () {
   }, {
     key: "dislike",
     value: function dislike(id) {
-      return fetch(this._url + "/cards/likes/".concat(id), {
+      return fetch(this.url + "/cards/likes/".concat(id), {
         method: 'DELETE',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
@@ -774,8 +774,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "handleUserAvatar",
-    value: function handleUserAvatar(data) {
-      return fetch(this._url + "/users/me/avatar", {
+    value: function handleUserAvatar(avatar) {
+      return fetch(this.url + "/users/me/".concat(avatar), {
         method: 'PATCH',
         headers: {
           authorization: '1e53c369-0342-4013-857c-26a049ec0854'
