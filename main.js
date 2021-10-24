@@ -7,11 +7,10 @@ var elementTemplate = document.querySelector("#element").content;
 var popupViewerImage = document.querySelector(".popup__viewer_image");
 var popupViewerTitle = document.querySelector(".popup__viewer_title");
 var popupImage = document.querySelector(".popup_image");
-var popupAvatar = document.querySelector(".profile__image-edit-button");
-var profileAvatar = document.querySelector(".profile__image");
 var popupInput = document.querySelector(".popup__text");
 var profileEdit = document.querySelector(".profile__edit-button");
 var popupProfile = document.querySelector(".popup_profile");
+var profileAvatar = document.querySelector(".profile__image");
 var profileContainer = document.querySelector(".popup__container_profile");
 var nameInput = profileContainer.querySelector(".popup__text_name");
 var jobInput = profileContainer.querySelector(".popup__text_job");
@@ -24,28 +23,11 @@ var placeInput = document.querySelector(".popup__text_place");
 var urlInput = document.querySelector(".popup__text_url");
 var popupInputTextPlace = document.querySelector(".popup__text_place");
 var popupInputTextUrl = document.querySelector(".popup__text_url");
+var avatarEditButton = document.querySelector('.profile__image-edit-button');
+var popupAvatarEdit = document.querySelector('.popup_avatar');
 var formCreate = document.forms.create;
-var formProfile = document.forms.profile; // Фото карты //
-
-var initialCards = [{
-  name: "Архыз",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-}, {
-  name: "Челябинская область",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
-}, {
-  name: "Иваново",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-}, {
-  name: "Камчатка",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
-}, {
-  name: "Холмогорский район",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
-}, {
-  name: "Байкал",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-}]; // Validation settings //
+var formProfile = document.forms.profile;
+var formAvatar = document.forms.avatar; // Validation settings //
 
 var validateObject = {
   formSelector: ".popup__form",
@@ -140,12 +122,10 @@ var Card = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "_handleDeleteImage",
-    value: function _handleDeleteImage(cardId) {
+    key: "handleDeleteImage",
+    value: function handleDeleteImage() {
       if (this._element.closest(".card")) {
-        this._element.remove(cardId);
-
-        this._element = null;
+        this._element.remove();
       }
     }
   }, {
@@ -506,6 +486,15 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
 
       this._form.reset();
     }
+  }, {
+    key: "renderLoading",
+    value: function renderLoading(isLoading) {
+      if (isLoading) {
+        this._popupButton.textContent = 'Сохранение...';
+      } else {
+        this._popupButton.textContent = this._popupButtonTextContent;
+      }
+    }
   }]);
 
   return PopupWithForm;
@@ -581,6 +570,20 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
         _this2._deleteApiRequest(_this2._cardId, _this2._deleteImage);
       });
     }
+  }, {
+    key: "setSubmitAction",
+    value: function setSubmitAction(action) {
+      this._handleSubmitCallback = action;
+    }
+  }, {
+    key: "renderLoadingWhileDeleting",
+    value: function renderLoadingWhileDeleting(isLoading) {
+      if (isLoading) {
+        this._popupButton.textContent = 'Сохранение...';
+      } else {
+        this._popupButton.textContent = this._popupButtonTextContent;
+      }
+    }
   }]);
 
   return PopupWithDelete;
@@ -597,12 +600,14 @@ function UserInfo_createClass(Constructor, protoProps, staticProps) { if (protoP
 var UserInfo = /*#__PURE__*/function () {
   function UserInfo(_ref) {
     var profileTitle = _ref.profileTitle,
-        profileSubtitle = _ref.profileSubtitle;
+        profileSubtitle = _ref.profileSubtitle,
+        profileAvatar = _ref.profileAvatar;
 
     UserInfo_classCallCheck(this, UserInfo);
 
     this.profileTitle = profileTitle;
     this.profileSubtitle = profileSubtitle;
+    this.profileAvatar = profileAvatar;
   }
 
   UserInfo_createClass(UserInfo, [{
@@ -619,6 +624,11 @@ var UserInfo = /*#__PURE__*/function () {
       this.profileTitle.innerText = data.popup_name;
       this.profileSubtitle.innerText = data.popup_job;
     }
+  }, {
+    key: "setUserAvatar",
+    value: function setUserAvatar(data) {
+      this._profileAvatar.src = data.avatar;
+    }
   }]);
 
   return UserInfo;
@@ -633,168 +643,101 @@ function Api_defineProperties(target, props) { for (var i = 0; i < props.length;
 function Api_createClass(Constructor, protoProps, staticProps) { if (protoProps) Api_defineProperties(Constructor.prototype, protoProps); if (staticProps) Api_defineProperties(Constructor, staticProps); return Constructor; }
 
 var Api = /*#__PURE__*/function () {
-  function Api(url) {
+  function Api(options) {
     Api_classCallCheck(this, Api);
 
-    this.url = url;
+    this._url = options.baseUrl;
+    this._headers = options.headers;
   }
 
   Api_createClass(Api, [{
-    key: "getUserInfo",
-    value: function getUserInfo() {
-      return fetch(this.url + '/users/me', {
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+    key: "_checkResponse",
+    value: function _checkResponse(res) {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(res.status));
     }
   }, {
-    key: "getCards",
-    value: function getCards() {
-      return fetch(this.url + '/cards', {
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+    key: "getUserInfo",
+    value: function getUserInfo() {
+      return fetch(this._url + '/users/me', {
+        method: 'GET',
+        headers: this._headers
+      }).then(this._checkResponse);
+    }
+  }, {
+    key: "getInitialCards",
+    value: function getInitialCards() {
+      return fetch(this._url + '/cards', {
+        method: 'GET',
+        headers: this._headers
+      }).then(this._checkResponse);
     }
   }, {
     key: "updateUserInfo",
     value: function updateUserInfo(name, about) {
-      return fetch(this.url + '/users/me', {
+      return fetch(this._url + '/users/me', {
         method: 'PATCH',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
-          'Content-Type': 'application/json'
-        },
+        headers: this._headers,
         body: JSON.stringify({
           name: name.textContent,
           about: about.textContent
         })
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+      }).then(this._checkResponse);
     }
   }, {
     key: "updateCards",
     value: function updateCards(name, link) {
-      return fetch(this.url + '/cards', {
+      return fetch(this._url + '/cards', {
         method: 'POST',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854',
-          'Content-Type': 'application/json'
-        },
+        headers: this._headers,
         body: JSON.stringify({
           name: name,
           link: link
         })
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
-    }
-  }, {
-    key: "removeCard",
-    value: function removeCard(cardId) {
-      return fetch(this.url + "/cards/".concat(cardId), {
-        method: 'DELETE',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+      }).then(this._checkResponse);
     }
   }, {
     key: "like",
     value: function like(id) {
-      return fetch(this.url + "/cards/likes/".concat(id), {
+      return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'PUT',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+        headers: this._headers
+      }).then(this._checkResponse);
     }
   }, {
     key: "dislike",
     value: function dislike(id) {
-      return fetch(this.url + "/cards/likes/".concat(id), {
+      return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'DELETE',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+        headers: this._headers
+      }).then(this._checkResponse);
+    }
+  }, {
+    key: "removeCard",
+    value: function removeCard(cardId) {
+      return fetch(this._url + "/cards/".concat(cardId), {
+        method: 'DELETE',
+        headers: this._headers
+      }).then(this._checkResponse);
     }
   }, {
     key: "handleUserAvatar",
-    value: function handleUserAvatar(avatar) {
-      return fetch(this.url + "/users/me/".concat(avatar), {
+    value: function handleUserAvatar(data) {
+      return fetch(this._url + "/users/me/avatar", {
         method: 'PATCH',
-        headers: {
-          authorization: '1e53c369-0342-4013-857c-26a049ec0854'
-        }
-      }).then(function (res) {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Error ".concat(res.status));
-        }
-      }).catch(function (err) {
-        console.error(err);
-      });
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: data
+        })
+      }).then(this._checkResponse);
     }
   }, {
     key: "getAllNeededData",
     value: function getAllNeededData() {
-      return Promise.all([this.getCards(), this.getUserInfo()]);
+      return Promise.all([this.getInitialCards(), this.getUserInfo()]);
     }
   }]);
 
@@ -815,26 +758,30 @@ var Api = /*#__PURE__*/function () {
 
  // API //
 
-var api = new Api('https://nomoreparties.co/v1/cohort-28', profileName, profileJob); // Avatar //
-// const popupAvatarEditFromValidator = new FormValidator(selectors, avatarEditForm)
-// popupAvatarEditFromValidator.enableValidation()
-// const popupAvatar = new PopupWithForm(popupAvatarEditSelector, newValues => {
-//   popupAvatar.renderLoading(true)
-//   api.handleUserAvatar(newValues)
-//     .then((data) => {
-//       userInfo.setUserAvatar(data)
-//       popupAvatarEditFromValidator.disableSubmitButton()
-//       popupAvatarEdit.close()
-//     })
-//     .catch((err) => console.log(err))
-//     .finally( _ => popupAvatarEdit.renderLoading(false))
-// })
-// popupAvatarEdit.setEventListeners()
-// avatarEditButton.addEventListener('click', _ => {
-//   popupAvatarEditFromValidator.removeErrors()
-//   popupAvatarEdit.open()
-// })
-// инфо пользователя с сервера //
+var api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-28',
+  headers: {
+    authorization: '1e53c369-0342-4013-857c-26a049ec0854',
+    'Content-Type': 'application/json'
+  }
+}); // Avatar //
+
+var avatarSample = new PopupWithForm({
+  popupSelector: ".popup_avatar",
+  handleSubmitForm: function handleSubmitForm(data) {
+    api.handleUserAvatar(data).then(function (data) {
+      userInfo.setUserAvatar(data);
+      avatarSample.close();
+    });
+    userInfo.setUserAvatar(data);
+    avatarSample.close();
+  }
+});
+avatarSample.setEventListeners();
+avatarEditButton.addEventListener("click", function (evt) {
+  validFormAvatar.resetValidation();
+  avatarSample.open();
+}); // инфо пользователя с сервера //
 
 api.getUserInfo().then(function (res) {
   profileName.textContent = res.name;
@@ -842,7 +789,7 @@ api.getUserInfo().then(function (res) {
   profileAvatar.src = res.avatar;
 }).then(function () {
   // карточки с сервера //
-  api.getCards().then(function (arrayCards) {
+  api.getInitialCards().then(function (arrayCards) {
     cardList.renderItems(arrayCards);
   }).catch(function (err) {
     console.error(err);
@@ -853,7 +800,8 @@ api.getUserInfo().then(function (res) {
 
 var userInfo = new UserInfo({
   profileTitle: profileName,
-  profileSubtitle: profileJob
+  profileSubtitle: profileJob,
+  profileImage: profileAvatar
 });
 
 var setInfo = function setInfo() {
@@ -882,7 +830,7 @@ var createCard = function createCard(item) {
   var card = new Card({
     data: item,
     openPopupWithDelete: function openPopupWithDelete(deleteImage) {
-      deleteSample.open(item._id, deleteImage);
+      deleteSample.open(item.id, deleteImage);
     },
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
@@ -901,7 +849,7 @@ var cardList = new Section({
   }
 }, cardContainer); // карточки с сервера //
 
-api.getCards().then(function (arrayCards) {
+api.getInitialCards().then(function (arrayCards) {
   console.log(arrayCards);
   cardList.renderItems(arrayCards);
 }).catch(function (err) {
@@ -945,5 +893,7 @@ var validFormCreate = new FormValidator(validateObject, formCreate);
 validFormCreate.enableValidation();
 var validFormProfile = new FormValidator(validateObject, formProfile);
 validFormProfile.enableValidation();
+var validFormAvatar = new FormValidator(validateObject, formAvatar);
+validFormAvatar.enableValidation();
 /******/ })()
 ;
