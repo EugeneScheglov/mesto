@@ -1,10 +1,12 @@
 export default class UserInfo {
     constructor({
         profileTitle,
-        profileSubtitle
+        profileSubtitle,
+        profileAvatar
     }) {
         this.profileTitle = profileTitle;
         this.profileSubtitle = profileSubtitle;
+        this.profileAvatar = profileAvatar;
     }
 
     getUserInfo() {
@@ -18,4 +20,8 @@ export default class UserInfo {
         this.profileTitle.innerText = data.popup_name;
         this.profileSubtitle.innerText = data.popup_job;
     }
+
+    setUserAvatar(data) {
+        this._profileAvatar.src = data.avatar
+      }
 }

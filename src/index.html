@@ -16,11 +16,14 @@
         <main>
             <section class="profile">
                 <div class="profile__content">
-                    <img class="profile__image" src="<%=require('./images/image.jpg')%>" alt="аватарка">
+                    <div class="profile__avatar">
+                        <img class="profile__image" src="" alt="аватарка">
+                        <button type="button" class="profile__image-edit-button"></button>
+                    </div>
                     <div class="profile__card">
                         <div class="profile__info">
-                            <h1 class="profile__title">Жак-Ив Кусто</h1>
-                            <p class="profile__subtitle">Исследователь океана</p>
+                            <h1 class="profile__title"></h1>
+                            <p class="profile__subtitle"></p>
                         </div>
                         <button class="profile__edit-button" type="button">
                         </button>
@@ -36,7 +39,10 @@
                         <img class="card__image" src="//:0" alt="">
                         <div class="card__item">
                             <h2 class="card__info"></h2>
-                            <button class="card__button-like" type="button"></button>
+                            <div class="card__like-box">
+                                <button class="card__button-like" type="button"></button>
+                                <p class="card__like-count">0</p>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -52,7 +58,7 @@
                 <button class="popup__close popup__close_profile" type="button"></button>
                 <div class="popup__container popup__container_profile">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form" name="profile">
+                    <form class="popup__form" name="profile" novalidate>
                         <label class="popup__form-field">
                             <input type="text" class="popup__text popup__text_name" name="popup_name" minlength="2"
                                 maxlength="40" required id="name">
@@ -69,6 +75,22 @@
             </div>
         </div>
 
+        <div class="popup popup_avatar">
+            <div class="popup__position"><button class="popup__close popup__close_avatar" type="button"></button>
+                <div class="popup__container popup__container_avatar" name="profile_avatar">
+                    <h2 class="popup__title">Обновить аватар</h2>
+                    <form class="popup__form" name="avatar" novalidate>
+                        <label class="popup__form-field">
+                            <input type="url" placeholder="Ссылка" class="popup__text popup__text_url"
+                                name="link" required id="link">
+                            <span id="link-error" class="error"></span>
+                        </label>
+                        <button type="submit" class="popup__submit popup__submit_avatar">Cохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="popup popup_create">
             <div class="popup__position">
                 <button class="popup__close popup__close_create" type="button"></button>
@@ -76,8 +98,8 @@
                     <h2 class="popup__title">Новое Место</h2>
                     <form class="popup__form" name="create" id="form" novalidate>
                         <label class="popup__form-field">
-                            <input type="text" placeholder="Название" class="popup__text popup__text_place"
-                                name="name" minlength="2" maxlength="30" required id="place">
+                            <input type="text" placeholder="Название" class="popup__text popup__text_place" name="name"
+                                minlength="2" maxlength="30" required id="place">
                             <span id="place-error" class="error"></span>
                         </label>
                         <label class="popup__form-field">
@@ -86,6 +108,18 @@
                             <span id="link-error" class="error"></span>
                         </label>
                         <button type="submit" class="popup__submit popup__submit_create">Создать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup popup_delete">
+            <div class="popup__position">
+                <button class="popup__close popup__close_delete" type="button"></button>
+                <div class="popup__container popup__container_delete">
+                    <h2 class="popup__title">Вы уверены?</h2>
+                    <form class="popup__form" name="delete">
+                        <button type="submit" class="popup__submit popup__submit_delete popup__submit_valid">Да</button>
                     </form>
                 </div>
             </div>

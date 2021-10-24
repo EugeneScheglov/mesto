@@ -1,38 +1,35 @@
 import Popup from "./Popup.js";
 
-export default class PopupWithForm extends Popup {
+export default class PopupWithDelete extends Popup {
     constructor({
         popupSelector,
-        handleSubmitForm
+        deleteApiRequest
     }) {
         super(popupSelector);
-        this.handleSubmitForm = handleSubmitForm;
+        this._deleteApiRequest = deleteApiRequest;
         this._form = this._popup.querySelector('.popup__form');
-        this._inputList = this._form.querySelectorAll('.popup__text');
     }
 
-    _getInputValues() {
-        this.inputValues = {};
-        this._inputList.forEach(input => {
-            this.inputValues[input.name] = input.value;
-        });
-        return this.inputValues;
+    open(cardId, deleteImage) {
+        super.open()
+        this._cardId = cardId;
+        this._deleteImage = deleteImage;
+
     }
 
     setEventListeners() {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this.handleSubmitForm(this._getInputValues());
+            this._deleteApiRequest(this._cardId, this._deleteImage);
         });
     }
 
-    close() {
-        super.close();
-        this._form.reset();
+    setSubmitAction(action) {
+        this._handleSubmitCallback = action
     }
 
-    renderLoading(isLoading) {
+    renderLoadingWhileDeleting(isLoading) {
         if (isLoading) {
             this._popupButton.textContent = 'Сохранение...'
         } else {

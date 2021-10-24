@@ -1,12 +1,25 @@
 export default class Card {
   constructor({
     data,
+    openPopupWithDelete,
     handleCardClick
   }, selector) {
     this._text = data.name;
     this._image = data.link;
+    this._likes = data.likes;
+    this._cardId = data._id;
+    this._userId = data.owner._id;
+    this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
+    this._openPopupWithDelete = openPopupWithDelete;
+  }
+
+  _hideDeleteButton() {
+    if (this._myUserId !== this._userId) {
+      this._deleteButton.hidden = true;
+    }
+
   }
 
   _getElement() {
@@ -24,6 +37,7 @@ export default class Card {
     this._cardImage = this._element.querySelector(".card__image");
     this._cardTitle = this._element.querySelector(".card__info");
     this._cardLike = this._element.querySelector(".card__button-like");
+    this._deleteButton = this._element.querySelector(".card__trash-button");
     this._setEventListeners();
 
     this._cardImage.src = this._image;
@@ -37,6 +51,7 @@ export default class Card {
     this._likeSetEventListeners();
     this._imageSetEventListeners();
     this._deleteSetEventListeners();
+    this._hideDeleteButton();
   }
 
   _imageSetEventListeners() {
@@ -47,17 +62,15 @@ export default class Card {
   }
 
   _deleteSetEventListeners() {
-    this._element
-      .querySelector(".card__trash-button")
+    this._deleteButton
       .addEventListener("click", () => {
-        this._handleDeleteImage();
+        this._openPopupWithDelete(this.handleDeleteImage);
       });
   }
 
-  _handleDeleteImage() {
+  handleDeleteImage() {
     if (this._element.closest(".card")) {
       this._element.remove();
-      this._element = null;
     }
   }
 

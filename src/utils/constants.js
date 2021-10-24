@@ -5,6 +5,7 @@ export const popupImage = document.querySelector(".popup_image");
 export const popupInput = document.querySelector(".popup__text");
 export const profileEdit = document.querySelector(".profile__edit-button");
 export const popupProfile = document.querySelector(".popup_profile");
+export const profileAvatar = document.querySelector(".profile__image");
 export const profileContainer = document.querySelector(".popup__container_profile");
 export const nameInput = profileContainer.querySelector(".popup__text_name");
 export const jobInput = profileContainer.querySelector(".popup__text_job");
@@ -17,37 +18,11 @@ export const placeInput = document.querySelector(".popup__text_place");
 export const urlInput = document.querySelector(".popup__text_url");
 export const popupInputTextPlace = document.querySelector(".popup__text_place");
 export const popupInputTextUrl = document.querySelector(".popup__text_url");
+export const avatarEditButton = document.querySelector('.profile__image-edit-button');
+export const popupAvatarEdit = document.querySelector('.popup_avatar');
 export const formCreate = document.forms.create;
 export const formProfile = document.forms.profile;
-
-// Фото карты //
-
-export const initialCards = [{
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
+export const formAvatar = document.forms.avatar;
 
 // Validation settings //
 export const validateObject = {
