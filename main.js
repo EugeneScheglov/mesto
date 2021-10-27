@@ -450,6 +450,8 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
     _this.handleSubmitForm = handleSubmitForm;
     _this._form = _this._popup.querySelector('.popup__form');
     _this._inputList = _this._form.querySelectorAll('.popup__text');
+    _this._popupButton = _this._form.querySelector('.popup__submit');
+    _this._popupButtonTextContent = _this._popupButton.textContent;
     return _this;
   }
 
@@ -626,8 +628,8 @@ var UserInfo = /*#__PURE__*/function () {
     }
   }, {
     key: "setUserAvatar",
-    value: function setUserAvatar(data) {
-      this.profileImage.src = data.avatar;
+    value: function setUserAvatar(res) {
+      this.profileImage.src = res.avatar;
     }
   }]);
 
@@ -769,11 +771,15 @@ var api = new Api({
 var avatarSample = new PopupWithForm({
   popupSelector: ".popup_avatar",
   handleSubmitForm: function handleSubmitForm(data) {
-    api.handleUserAvatar(data).then(function (data) {
-      userInfo.setUserAvatar(data);
+    avatarSample.renderLoading(true);
+    api.handleUserAvatar(data).then(function (res) {
+      userInfo.setUserAvatar(res);
       avatarSample.close();
+    }).catch(function (err) {
+      return console.log(err);
+    }).finally(function (_) {
+      return avatarSample.renderLoading(false);
     });
-    userInfo.setUserAvatar(data);
     avatarSample.close();
   }
 });
@@ -854,7 +860,7 @@ api.getInitialCards().then(function (arrayCards) {
   cardList.renderItems(arrayCards);
 }).catch(function (err) {
   console.error(err);
-}); //Экземепляр с картинкой //
+}); // Экземепляр с картинкой //
 
 var cardImagePopup = new PopupWithImage('.popup_image');
 cardImagePopup.setEventListeners(); // Добавление Нового Места //
