@@ -601,13 +601,13 @@ var UserInfo = /*#__PURE__*/function () {
   function UserInfo(_ref) {
     var profileTitle = _ref.profileTitle,
         profileSubtitle = _ref.profileSubtitle,
-        profileAvatar = _ref.profileAvatar;
+        profileImage = _ref.profileImage;
 
     UserInfo_classCallCheck(this, UserInfo);
 
     this.profileTitle = profileTitle;
     this.profileSubtitle = profileSubtitle;
-    this.profileAvatar = profileAvatar;
+    this.profileImage = profileImage;
   }
 
   UserInfo_createClass(UserInfo, [{
@@ -627,7 +627,7 @@ var UserInfo = /*#__PURE__*/function () {
   }, {
     key: "setUserAvatar",
     value: function setUserAvatar(data) {
-      this._profileAvatar.src = data.avatar;
+      this.profileImage.src = data.avatar;
     }
   }]);
 
@@ -730,7 +730,7 @@ var Api = /*#__PURE__*/function () {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
-          avatar: data
+          avatar: data.userAvatar
         })
       }).then(this._checkResponse);
     }
@@ -764,7 +764,7 @@ var api = new Api({
     authorization: '1e53c369-0342-4013-857c-26a049ec0854',
     'Content-Type': 'application/json'
   }
-}); // Avatar //
+}); // экзмепляр Avatarа //
 
 var avatarSample = new PopupWithForm({
   popupSelector: ".popup_avatar",
