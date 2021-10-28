@@ -60,7 +60,7 @@ var Card = /*#__PURE__*/function () {
     this._userId = data.owner._id;
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
-    this.handleCardClick = handleCardClick; // this._handleLikeClick = handleLikeClick;
+    this.handleCardClick = handleCardClick; // this._likeHandleClick = likeHandleClick;
 
     this._openPopupWithDelete = openPopupWithDelete;
   }
@@ -158,9 +158,9 @@ var Card = /*#__PURE__*/function () {
   }, {
     key: "handleLikeCard",
     value: function handleLikeCard() {
-      var likeButton = this._element.querySelector('.card__button-like');
+      var likeButton = this._cardLike.querySelector('.card__button-like');
 
-      var likeCount = this._element.querySelector('.card__like-count');
+      var likeCount = this._cardLike.querySelector('.card__like-count');
 
       if (!likeButton.classList.contains('card__button-like_active')) {
         this._api.like(this._cardId).then(function (data) {
@@ -576,13 +576,11 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
   function PopupWithDelete(_ref) {
     var _this;
 
-    var popupSelector = _ref.popupSelector,
-        deleteApiRequest = _ref.deleteApiRequest;
+    var popupSelector = _ref.popupSelector;
 
     PopupWithDelete_classCallCheck(this, PopupWithDelete);
 
     _this = _super.call(this, popupSelector);
-    _this._deleteApiRequest = deleteApiRequest;
     _this._form = _this._popup.querySelector('.popup__form');
     _this._popupButton = _this._form.querySelector('.popup__submit');
     _this._popupButtonTextContent = _this._popupButton.textContent;
@@ -590,14 +588,6 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
   }
 
   PopupWithDelete_createClass(PopupWithDelete, [{
-    key: "open",
-    value: function open(cardId, deleteImage) {
-      PopupWithDelete_get(PopupWithDelete_getPrototypeOf(PopupWithDelete.prototype), "open", this).call(this);
-
-      this._cardId = cardId;
-      this._deleteImage = deleteImage;
-    }
-  }, {
     key: "setEventListeners",
     value: function setEventListeners() {
       var _this2 = this;
@@ -607,7 +597,7 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
       this._form.addEventListener('submit', function (evt) {
         evt.preventDefault();
 
-        _this2._deleteApiRequest(_this2._cardId, _this2._deleteImage);
+        _this2._handleSubmitCallback();
       });
     }
   }, {
@@ -757,8 +747,8 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "removeCard",
-    value: function removeCard(cardId) {
-      return fetch(this._url + "/cards/".concat(cardId), {
+    value: function removeCard(_id) {
+      return fetch(this._url + "/cards/".concat(_id), {
         method: 'DELETE',
         headers: this._headers
       }).then(this._checkResponse);
@@ -872,22 +862,38 @@ profileEdit.addEventListener("click", function () {
   setInfo();
   validFormProfile.resetValidation();
   profileSample.open();
-}); // Создание карточки //
+}); // Создание карточки //            <========================
 
 var createCard = function createCard(item) {
   var card = new Card({
     data: item,
-    openPopupWithDelete: function openPopupWithDelete(deleteImage) {
-      deleteSample.open(item._id, deleteImage);
+    openPopupWithDelete: function openPopupWithDelete() {
+      deleteSample.setSubmitAction(function (_) {
+        deleteSample.renderLoadingWhileDeleting(true);
+        api.removeCard(item._id).then(function (_) {
+          card.handleDeleteImage();
+          deleteSample.close();
+        }).catch(function (err) {
+          return console.log(err);
+        }).finally(function (_) {
+          return deleteSample.renderLoadingWhileDeleting(false);
+        });
+      });
+      deleteSample.open();
     },
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
-    } // handleLikeClick: () => card.handleLikeCard(),
+    } // _likeHandleClick: () => card.handleLikeCard()
 
   }, '#element');
   return card.generate();
-}; // Создание карточки из коробки //
+}; // удаление карточки //
 
+
+var deleteSample = new PopupWithDelete({
+  popupSelector: ".popup_delete"
+});
+deleteSample.setEventListeners(); // Создание карточки из коробки //
 
 var cardList = new Section({
   renderer: function renderer(item) {
@@ -930,21 +936,7 @@ createSample.setEventListeners();
 createPopupOpenButton.addEventListener("click", function (evt) {
   validFormCreate.resetValidation();
   createSample.open();
-}); // удаления карточки //
-
-var deleteSample = new PopupWithDelete({
-  popupSelector: ".popup_delete",
-  deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
-    deleteSample.renderLoadingWhileDeleting(true), api.removeCard(cardId, deleteImage).then(function () {
-      deleteSample.close();
-    }).catch(function (err) {
-      return console.log(err);
-    }).finally(function (_) {
-      return deleteSample.renderLoadingWhileDeleting(false);
-    });
-  }
-});
-deleteSample.setEventListeners(); // классы для валидации форм //
+}); // классы для валидации форм //
 
 var validFormCreate = new FormValidator(validateObject, formCreate);
 validFormCreate.enableValidation();
