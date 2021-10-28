@@ -3,35 +3,29 @@ import Popup from "./Popup.js";
 export default class PopupWithDelete extends Popup {
     constructor({
         popupSelector,
-        deleteApiRequest
     }) {
         super(popupSelector);
-        this._deleteApiRequest = deleteApiRequest;
         this._form = this._popup.querySelector('.popup__form');
-    }
 
-    open(cardId, deleteImage) {
-        super.open()
-        this._cardId = cardId;
-        this._deleteImage = deleteImage;
-
+        this._popupButton = this._form.querySelector('.popup__submit');
+        this._popupButtonTextContent = this._popupButton.textContent;
     }
 
     setEventListeners() {
         super.setEventListeners();
-        this._form.addEventListener('submit', (evt) => {
+        this._form.addEventListener('submit', evt => {
             evt.preventDefault();
-            this._deleteApiRequest(this._cardId, this._deleteImage);
-        });
+            this._handleSubmitCallback();
+        })
     }
 
     setSubmitAction(action) {
-        this._handleSubmitCallback = action
+        this._handleSubmitCallback = action;
     }
 
     renderLoadingWhileDeleting(isLoading) {
         if (isLoading) {
-            this._popupButton.textContent = 'Сохранение...'
+            this._popupButton.textContent = 'Удаление...'
         } else {
             this._popupButton.textContent = this._popupButtonTextContent
         }

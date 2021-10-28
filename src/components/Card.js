@@ -4,6 +4,7 @@ export default class Card {
     openPopupWithDelete,
     handleCardClick
   }, selector) {
+    // this._api = api;
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
@@ -12,6 +13,7 @@ export default class Card {
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
+    // this._likeHandleClick = likeHandleClick;
     this._openPopupWithDelete = openPopupWithDelete;
   }
 
@@ -19,7 +21,12 @@ export default class Card {
     if (this._myUserId !== this._userId) {
       this._deleteButton.hidden = true;
     }
+  }
 
+  _hideLikeButton() {
+    if(this._likes.find((obj) => this._userId === obj._cardId)) {
+      this._element.querySelector('.card__button-like').classList.add('card__button-like_active')
+    }
   }
 
   _getElement() {
@@ -52,6 +59,7 @@ export default class Card {
     this._imageSetEventListeners();
     this._deleteSetEventListeners();
     this._hideDeleteButton();
+    this._hideLikeButton();
   }
 
   _imageSetEventListeners() {
@@ -64,14 +72,12 @@ export default class Card {
   _deleteSetEventListeners() {
     this._deleteButton
       .addEventListener("click", () => {
-        this._openPopupWithDelete(this.handleDeleteImage);
+        this._openPopupWithDelete();
       });
   }
 
   handleDeleteImage() {
-    if (this._element.closest(".card")) {
-      this._element.remove();
-    }
+    this._element.closest(".card").remove();
   }
 
   _likeSetEventListeners() {
@@ -84,5 +90,30 @@ export default class Card {
   _likeHandleClick() {
     this._cardLike
       .classList.toggle("card__button-like_active");
+  }
+
+  handleLikeCard() {
+    const likeButton = this._cardLike.querySelector('.card__button-like');
+    const likeCount = this._cardLike.querySelector('.card__like-count');
+
+    if(!(likeButton.classList.contains('card__button-like_active'))) {
+      this._api.like(this._cardId)
+        .then((data) => {
+          likeButton.classList.add('card__button-like_active');
+          likeCount.textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      this._api.dislike(this._cardId)
+        .then((data) => {
+          likeButton.classList.remove('card__button-like_active');
+          likeCount.textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }
 }

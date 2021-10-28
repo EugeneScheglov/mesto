@@ -67,8 +67,8 @@ export default class Api {
             .then(this._checkResponse)
     }
 
-    removeCard(cardId) {
-        return fetch(this._url + `/cards/${cardId}`, {
+    removeCard(_id) {
+        return fetch(this._url + `/cards/${_id}`, {
                 method: 'DELETE',
                 headers: this._headers
                 
@@ -81,7 +81,7 @@ export default class Api {
                 method: 'PATCH',
                 headers: this._headers,
                 body: JSON.stringify({
-                    avatar: data,
+                    avatar: data.userAvatar,
                 })
             })
             .then(this._checkResponse)

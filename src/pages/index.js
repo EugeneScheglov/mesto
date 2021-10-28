@@ -33,17 +33,18 @@ const api = new Api({
   }
 });
 
-// Avatar //
+// экзмепляр Avatarа //
 const avatarSample = new PopupWithForm({
   popupSelector: ".popup_avatar",
   handleSubmitForm: (data) => {
+    avatarSample.renderLoading(true);
     api.handleUserAvatar(data)
-      .then((data) => {
-        userInfo.setUserAvatar(data)
+      .then((res) => {
+        userInfo.setUserAvatar(res)
         avatarSample.close()
       })
-    userInfo.setUserAvatar(data)
-    avatarSample.close()
+      .catch((err) => console.log(err))
+      .finally(_ => avatarSample.renderLoading(false))
   }
 });
 avatarSample.setEventListeners()
@@ -91,8 +92,11 @@ const setInfo = () => {
 const profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: (data) => {
+    profileSample.renderLoading(true);
     userInfo.setUserInfo(data);
-    api.updateUserInfo(profileName, profileJob);
+    api.updateUserInfo(profileName, profileJob)
+      .catch((err) => console.log(err))
+      .finally(_ => profileSample.renderLoading(false))
     profileSample.close();
   }
 });
@@ -104,19 +108,36 @@ profileEdit.addEventListener("click", () => {
   profileSample.open();
 });
 
-// Создание карточки //
+// Создание карточки //            <========================
 const createCard = (item) => {
   const card = new Card({
     data: item,
-    openPopupWithDelete: (deleteImage) => {
-      deleteSample.open(item.id, deleteImage);
+    openPopupWithDelete: () => {
+      deleteSample.setSubmitAction( _ => {
+        deleteSample.renderLoadingWhileDeleting(true);
+        api.removeCard(item._id)
+          .then( _ => {
+            card.handleDeleteImage();
+            deleteSample.close();
+          })
+          .catch((err) => console.log(err))
+          .finally( _ => deleteSample.renderLoadingWhileDeleting(false))
+      })
+      deleteSample.open();
     },
     handleCardClick: () => {
       cardImagePopup.open(item);
-    }
+    },
+    // _likeHandleClick: () => card.handleLikeCard()
   }, '#element');
   return card.generate();
 };
+
+// удаление карточки //
+const deleteSample = new PopupWithDelete({
+  popupSelector: ".popup_delete",
+});
+deleteSample.setEventListeners();
 
 // Создание карточки из коробки //
 const cardList = new Section({
@@ -138,7 +159,7 @@ api.getInitialCards()
     console.error(err);
   })
 
-//Экземепляр с картинкой //
+// Экземепляр с картинкой //
 const cardImagePopup = new PopupWithImage('.popup_image');
 cardImagePopup.setEventListeners()
 
@@ -146,6 +167,7 @@ cardImagePopup.setEventListeners()
 const createSample = new PopupWithForm({
   popupSelector: ".popup_create",
   handleSubmitForm: (data) => {
+    createSample.renderLoading(true);
     const cardObj = {};
     cardObj.name = data.name;
     cardObj.link = data.link;
@@ -155,6 +177,8 @@ const createSample = new PopupWithForm({
         cardList.addItem(card, 'prepend');
         createSample.close();
       })
+      .catch((err) => console.log(err))
+      .finally(_ => createSample.renderLoading(false))
   }
 });
 createSample.setEventListeners();
@@ -162,19 +186,6 @@ createPopupOpenButton.addEventListener("click", function (evt) {
   validFormCreate.resetValidation();
   createSample.open();
 });
-
-// удаления карточки //
-const deleteSample = new PopupWithDelete({
-  popupSelector: ".popup_delete",
-  deleteApiRequest: (cardId, deleteImage) => {
-    api.removeCard(cardId)
-      .then(() => {
-        deleteImage();
-        deleteSample.close();
-      })
-  }
-});
-deleteSample.setEventListeners();
 
 // классы для валидации форм //
 const validFormCreate = new FormValidator(validateObject, formCreate);
