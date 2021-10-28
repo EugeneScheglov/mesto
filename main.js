@@ -52,6 +52,7 @@ var Card = /*#__PURE__*/function () {
 
     _classCallCheck(this, Card);
 
+    // this._api = api;
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
@@ -59,7 +60,8 @@ var Card = /*#__PURE__*/function () {
     this._userId = data.owner._id;
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
-    this.handleCardClick = handleCardClick;
+    this.handleCardClick = handleCardClick; // this._handleLikeClick = handleLikeClick;
+
     this._openPopupWithDelete = openPopupWithDelete;
   }
 
@@ -68,6 +70,17 @@ var Card = /*#__PURE__*/function () {
     value: function _hideDeleteButton() {
       if (this._myUserId !== this._userId) {
         this._deleteButton.hidden = true;
+      }
+    }
+  }, {
+    key: "_hideLikeButton",
+    value: function _hideLikeButton() {
+      var _this = this;
+
+      if (this._likes.find(function (obj) {
+        return _this._userId === obj._cardId;
+      })) {
+        this._element.querySelector('.card__button-like').classList.add('card__button-like_active');
       }
     }
   }, {
@@ -102,45 +115,68 @@ var Card = /*#__PURE__*/function () {
       this._deleteSetEventListeners();
 
       this._hideDeleteButton();
+
+      this._hideLikeButton();
     }
   }, {
     key: "_imageSetEventListeners",
     value: function _imageSetEventListeners() {
-      var _this = this;
+      var _this2 = this;
 
       this._cardImage.addEventListener("click", function () {
-        _this.handleCardClick();
+        _this2.handleCardClick();
       });
     }
   }, {
     key: "_deleteSetEventListeners",
     value: function _deleteSetEventListeners() {
-      var _this2 = this;
+      var _this3 = this;
 
       this._deleteButton.addEventListener("click", function () {
-        _this2._openPopupWithDelete(_this2.handleDeleteImage);
+        _this3._openPopupWithDelete();
       });
     }
   }, {
     key: "handleDeleteImage",
     value: function handleDeleteImage() {
-      if (this._element.closest(".card")) {
-        this._element.remove();
-      }
+      this._element.closest(".card").remove();
     }
   }, {
     key: "_likeSetEventListeners",
     value: function _likeSetEventListeners() {
-      var _this3 = this;
+      var _this4 = this;
 
       this._cardLike.addEventListener("click", function () {
-        _this3._likeHandleClick();
+        _this4._likeHandleClick();
       });
     }
   }, {
     key: "_likeHandleClick",
     value: function _likeHandleClick() {
       this._cardLike.classList.toggle("card__button-like_active");
+    }
+  }, {
+    key: "handleLikeCard",
+    value: function handleLikeCard() {
+      var likeButton = this._element.querySelector('.card__button-like');
+
+      var likeCount = this._element.querySelector('.card__like-count');
+
+      if (!likeButton.classList.contains('card__button-like_active')) {
+        this._api.like(this._cardId).then(function (data) {
+          likeButton.classList.add('card__button-like_active');
+          likeCount.textContent = data.likes.length;
+        }).catch(function (err) {
+          console.log(err);
+        });
+      } else {
+        this._api.dislike(this._cardId).then(function (data) {
+          likeButton.classList.remove('card__button-like_active');
+          likeCount.textContent = data.likes.length;
+        }).catch(function (err) {
+          console.log(err);
+        });
+      }
     }
   }]);
 
@@ -548,6 +584,8 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
     _this = _super.call(this, popupSelector);
     _this._deleteApiRequest = deleteApiRequest;
     _this._form = _this._popup.querySelector('.popup__form');
+    _this._popupButton = _this._form.querySelector('.popup__submit');
+    _this._popupButtonTextContent = _this._popupButton.textContent;
     return _this;
   }
 
@@ -581,7 +619,7 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
     key: "renderLoadingWhileDeleting",
     value: function renderLoadingWhileDeleting(isLoading) {
       if (isLoading) {
-        this._popupButton.textContent = 'Сохранение...';
+        this._popupButton.textContent = 'Удаление...';
       } else {
         this._popupButton.textContent = this._popupButtonTextContent;
       }
@@ -780,7 +818,6 @@ var avatarSample = new PopupWithForm({
     }).finally(function (_) {
       return avatarSample.renderLoading(false);
     });
-    avatarSample.close();
   }
 });
 avatarSample.setEventListeners();
@@ -820,8 +857,13 @@ var setInfo = function setInfo() {
 var profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: function handleSubmitForm(data) {
+    profileSample.renderLoading(true);
     userInfo.setUserInfo(data);
-    api.updateUserInfo(profileName, profileJob);
+    api.updateUserInfo(profileName, profileJob).catch(function (err) {
+      return console.log(err);
+    }).finally(function (_) {
+      return profileSample.renderLoading(false);
+    });
     profileSample.close();
   }
 });
@@ -836,11 +878,12 @@ var createCard = function createCard(item) {
   var card = new Card({
     data: item,
     openPopupWithDelete: function openPopupWithDelete(deleteImage) {
-      deleteSample.open(item.id, deleteImage);
+      deleteSample.open(item._id, deleteImage);
     },
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
-    }
+    } // handleLikeClick: () => card.handleLikeCard(),
+
   }, '#element');
   return card.generate();
 }; // Создание карточки из коробки //
@@ -868,6 +911,7 @@ cardImagePopup.setEventListeners(); // Добавление Нового Мес�
 var createSample = new PopupWithForm({
   popupSelector: ".popup_create",
   handleSubmitForm: function handleSubmitForm(data) {
+    createSample.renderLoading(true);
     var cardObj = {};
     cardObj.name = data.name;
     cardObj.link = data.link;
@@ -875,6 +919,10 @@ var createSample = new PopupWithForm({
       var card = createCard(res);
       cardList.addItem(card, 'prepend');
       createSample.close();
+    }).catch(function (err) {
+      return console.log(err);
+    }).finally(function (_) {
+      return createSample.renderLoading(false);
     });
   }
 });
@@ -887,9 +935,12 @@ createPopupOpenButton.addEventListener("click", function (evt) {
 var deleteSample = new PopupWithDelete({
   popupSelector: ".popup_delete",
   deleteApiRequest: function deleteApiRequest(cardId, deleteImage) {
-    api.removeCard(cardId).then(function () {
-      deleteImage();
+    deleteSample.renderLoadingWhileDeleting(true), api.removeCard(cardId, deleteImage).then(function () {
       deleteSample.close();
+    }).catch(function (err) {
+      return console.log(err);
+    }).finally(function (_) {
+      return deleteSample.renderLoadingWhileDeleting(false);
     });
   }
 });
