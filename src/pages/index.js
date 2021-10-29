@@ -12,14 +12,14 @@ import {
   formAvatar,
   validateObject,
   profileAvatar,
-  avatarEditButton
+  avatarEditButton,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithDelete from "../components/PopupWithDelete.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import './index.css';
@@ -108,33 +108,35 @@ profileEdit.addEventListener("click", () => {
   profileSample.open();
 });
 
-// Создание карточки //            <========================
+// Создание карточки //
 const createCard = (item) => {
   const card = new Card({
-    data: item,
+    data: item, api,
     openPopupWithDelete: () => {
-      deleteSample.setSubmitAction( _ => {
+      deleteSample.setSubmitAction(_ => {
         deleteSample.renderLoadingWhileDeleting(true);
         api.removeCard(item._id)
-          .then( _ => {
+          .then(_ => {
             card.handleDeleteImage();
             deleteSample.close();
           })
           .catch((err) => console.log(err))
-          .finally( _ => deleteSample.renderLoadingWhileDeleting(false))
+          .finally(_ => deleteSample.renderLoadingWhileDeleting(false))
       })
       deleteSample.open();
     },
     handleCardClick: () => {
       cardImagePopup.open(item);
     },
-    // _likeHandleClick: () => card.handleLikeCard()
+    likeHandleClick: () => {
+      card.handleLikeCard();
+    },
   }, '#element');
   return card.generate();
 };
 
 // удаление карточки //
-const deleteSample = new PopupWithDelete({
+const deleteSample = new PopupWithConfirmation({
   popupSelector: ".popup_delete",
 });
 deleteSample.setEventListeners();
@@ -143,8 +145,6 @@ deleteSample.setEventListeners();
 const cardList = new Section({
   renderer: (item) => {
     const cardElement = createCard(item);
-    const cardLikesCount = cardElement.querySelector('.card__like-count');
-    cardLikesCount.textContent = item.likes.length;
     cardList.addItem(cardElement, 'append');
   }
 }, cardContainer);

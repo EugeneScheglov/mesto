@@ -2,9 +2,11 @@ export default class Card {
   constructor({
     data,
     openPopupWithDelete,
-    handleCardClick
+    handleCardClick,
+    likeHandleClick,
+    api
   }, selector) {
-    // this._api = api;
+    this._api = api;
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
@@ -13,7 +15,7 @@ export default class Card {
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
     this.handleCardClick = handleCardClick;
-    // this._likeHandleClick = likeHandleClick;
+    this._likeHandleClick = likeHandleClick;
     this._openPopupWithDelete = openPopupWithDelete;
   }
 
@@ -24,8 +26,8 @@ export default class Card {
   }
 
   _hideLikeButton() {
-    if(this._likes.find((obj) => this._userId === obj._cardId)) {
-      this._element.querySelector('.card__button-like').classList.add('card__button-like_active')
+    if (this._likes.find((obj) => this._myUserId === obj._id)) {
+      this._element.querySelector('.card__button-like').classList.add('card__button-like_active');
     }
   }
 
@@ -45,8 +47,10 @@ export default class Card {
     this._cardTitle = this._element.querySelector(".card__info");
     this._cardLike = this._element.querySelector(".card__button-like");
     this._deleteButton = this._element.querySelector(".card__trash-button");
+    this._cardLikeBox = this._element.querySelector('.card__like-count');
     this._setEventListeners();
 
+    this._cardLikeBox.textContent = this._likes.length;
     this._cardImage.src = this._image;
     this._cardImage.alt = this._text;
     this._cardTitle.textContent = this._text;
@@ -87,14 +91,9 @@ export default class Card {
       });
   }
 
-  _likeHandleClick() {
-    this._cardLike
-      .classList.toggle("card__button-like_active");
-  }
-
   handleLikeCard() {
-    const likeButton = this._cardLike.querySelector('.card__button-like');
-    const likeCount = this._cardLike.querySelector('.card__like-count');
+    const likeButton = this._element.querySelector('.card__button-like');
+    const likeCount = this._element.querySelector('.card__like-count');
 
     if(!(likeButton.classList.contains('card__button-like_active'))) {
       this._api.like(this._cardId)

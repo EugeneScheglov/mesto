@@ -67,8 +67,8 @@ export default class Api {
             .then(this._checkResponse)
     }
 
-    removeCard(_id) {
-        return fetch(this._url + `/cards/${_id}`, {
+    removeCard(id) {
+        return fetch(this._url + `/cards/${id}`, {
                 method: 'DELETE',
                 headers: this._headers
                 
@@ -85,9 +85,5 @@ export default class Api {
                 })
             })
             .then(this._checkResponse)
-    }
-
-    getAllNeededData() {
-        return Promise.all([this.getInitialCards(), this.getUserInfo()])
     }
 }
