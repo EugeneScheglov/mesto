@@ -48,20 +48,22 @@ var Card = /*#__PURE__*/function () {
   function Card(_ref, selector) {
     var data = _ref.data,
         openPopupWithDelete = _ref.openPopupWithDelete,
-        handleCardClick = _ref.handleCardClick;
+        handleCardClick = _ref.handleCardClick,
+        likeHandleClick = _ref.likeHandleClick,
+        api = _ref.api;
 
     _classCallCheck(this, Card);
 
-    // this._api = api;
+    this._api = api;
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
-    this._cardId = data._id;
+    this._id = data._id;
     this._userId = data.owner._id;
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
-    this.handleCardClick = handleCardClick; // this._likeHandleClick = likeHandleClick;
-
+    this.handleCardClick = handleCardClick;
+    this._likeHandleClick = likeHandleClick;
     this._openPopupWithDelete = openPopupWithDelete;
   }
 
@@ -78,7 +80,7 @@ var Card = /*#__PURE__*/function () {
       var _this = this;
 
       if (this._likes.find(function (obj) {
-        return _this._userId === obj._cardId;
+        return _this._userId === obj._id;
       })) {
         this._element.querySelector('.card__button-like').classList.add('card__button-like_active');
       }
@@ -97,9 +99,11 @@ var Card = /*#__PURE__*/function () {
       this._cardTitle = this._element.querySelector(".card__info");
       this._cardLike = this._element.querySelector(".card__button-like");
       this._deleteButton = this._element.querySelector(".card__trash-button");
+      this._cardLike = this._element.querySelector('.card__like-count');
 
       this._setEventListeners();
 
+      this._cardLike.textContent = this._likes.length;
       this._cardImage.src = this._image;
       this._cardImage.alt = this._text;
       this._cardTitle.textContent = this._text;
@@ -149,28 +153,27 @@ var Card = /*#__PURE__*/function () {
       this._cardLike.addEventListener("click", function () {
         _this4._likeHandleClick();
       });
-    }
-  }, {
-    key: "_likeHandleClick",
-    value: function _likeHandleClick() {
-      this._cardLike.classList.toggle("card__button-like_active");
-    }
+    } // _likeHandleClick() {
+    //   this._cardLike
+    //     .classList.toggle("card__button-like_active");
+    // }
+
   }, {
     key: "handleLikeCard",
     value: function handleLikeCard() {
-      var likeButton = this._cardLike.querySelector('.card__button-like');
+      var likeButton = this._element.querySelector('.card__button-like');
 
-      var likeCount = this._cardLike.querySelector('.card__like-count');
+      var likeCount = this._element.querySelector('.card__like-count');
 
       if (!likeButton.classList.contains('card__button-like_active')) {
-        this._api.like(this._cardId).then(function (data) {
+        this._api.like(this._id).then(function (data) {
           likeButton.classList.add('card__button-like_active');
           likeCount.textContent = data.likes.length;
         }).catch(function (err) {
           console.log(err);
         });
       } else {
-        this._api.dislike(this._cardId).then(function (data) {
+        this._api.dislike(this._id).then(function (data) {
           likeButton.classList.remove('card__button-like_active');
           likeCount.textContent = data.likes.length;
         }).catch(function (err) {
@@ -731,16 +734,16 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "like",
-    value: function like(id) {
-      return fetch(this._url + "/cards/likes/".concat(id), {
+    value: function like(_id) {
+      return fetch(this._url + "/cards/likes/".concat(_id), {
         method: 'PUT',
         headers: this._headers
       }).then(this._checkResponse);
     }
   }, {
     key: "dislike",
-    value: function dislike(id) {
-      return fetch(this._url + "/cards/likes/".concat(id), {
+    value: function dislike(_id) {
+      return fetch(this._url + "/cards/likes/".concat(_id), {
         method: 'DELETE',
         headers: this._headers
       }).then(this._checkResponse);
@@ -883,8 +886,10 @@ var createCard = function createCard(item) {
     },
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
-    } // _likeHandleClick: () => card.handleLikeCard()
-
+    },
+    likeHandleClick: function likeHandleClick(_) {
+      return card.handleLikeCard();
+    }
   }, '#element');
   return card.generate();
 }; // удаление карточки //
