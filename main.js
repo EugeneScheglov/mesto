@@ -80,7 +80,7 @@ var Card = /*#__PURE__*/function () {
       var _this = this;
 
       if (this._likes.find(function (obj) {
-        return _this._userId === obj._id;
+        return _this._myUserId === obj._id;
       })) {
         this._element.querySelector('.card__button-like').classList.add('card__button-like_active');
       }
@@ -538,46 +538,46 @@ var PopupWithForm = /*#__PURE__*/function (_Popup) {
 }(Popup);
 
 
-;// CONCATENATED MODULE: ./src/components/PopupWithDelete.js
-function PopupWithDelete_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { PopupWithDelete_typeof = function _typeof(obj) { return typeof obj; }; } else { PopupWithDelete_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return PopupWithDelete_typeof(obj); }
+;// CONCATENATED MODULE: ./src/components/PopupWithConfirmation.js
+function PopupWithConfirmation_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { PopupWithConfirmation_typeof = function _typeof(obj) { return typeof obj; }; } else { PopupWithConfirmation_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return PopupWithConfirmation_typeof(obj); }
 
-function PopupWithDelete_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function PopupWithConfirmation_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function PopupWithDelete_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function PopupWithConfirmation_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function PopupWithDelete_createClass(Constructor, protoProps, staticProps) { if (protoProps) PopupWithDelete_defineProperties(Constructor.prototype, protoProps); if (staticProps) PopupWithDelete_defineProperties(Constructor, staticProps); return Constructor; }
+function PopupWithConfirmation_createClass(Constructor, protoProps, staticProps) { if (protoProps) PopupWithConfirmation_defineProperties(Constructor.prototype, protoProps); if (staticProps) PopupWithConfirmation_defineProperties(Constructor, staticProps); return Constructor; }
 
-function PopupWithDelete_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { PopupWithDelete_get = Reflect.get; } else { PopupWithDelete_get = function _get(target, property, receiver) { var base = PopupWithDelete_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return PopupWithDelete_get(target, property, receiver || target); }
+function PopupWithConfirmation_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { PopupWithConfirmation_get = Reflect.get; } else { PopupWithConfirmation_get = function _get(target, property, receiver) { var base = PopupWithConfirmation_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return PopupWithConfirmation_get(target, property, receiver || target); }
 
-function PopupWithDelete_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = PopupWithDelete_getPrototypeOf(object); if (object === null) break; } return object; }
+function PopupWithConfirmation_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = PopupWithConfirmation_getPrototypeOf(object); if (object === null) break; } return object; }
 
-function PopupWithDelete_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) PopupWithDelete_setPrototypeOf(subClass, superClass); }
+function PopupWithConfirmation_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) PopupWithConfirmation_setPrototypeOf(subClass, superClass); }
 
-function PopupWithDelete_setPrototypeOf(o, p) { PopupWithDelete_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return PopupWithDelete_setPrototypeOf(o, p); }
+function PopupWithConfirmation_setPrototypeOf(o, p) { PopupWithConfirmation_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return PopupWithConfirmation_setPrototypeOf(o, p); }
 
-function PopupWithDelete_createSuper(Derived) { var hasNativeReflectConstruct = PopupWithDelete_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = PopupWithDelete_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = PopupWithDelete_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return PopupWithDelete_possibleConstructorReturn(this, result); }; }
+function PopupWithConfirmation_createSuper(Derived) { var hasNativeReflectConstruct = PopupWithConfirmation_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = PopupWithConfirmation_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = PopupWithConfirmation_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return PopupWithConfirmation_possibleConstructorReturn(this, result); }; }
 
-function PopupWithDelete_possibleConstructorReturn(self, call) { if (call && (PopupWithDelete_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return PopupWithDelete_assertThisInitialized(self); }
+function PopupWithConfirmation_possibleConstructorReturn(self, call) { if (call && (PopupWithConfirmation_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return PopupWithConfirmation_assertThisInitialized(self); }
 
-function PopupWithDelete_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function PopupWithConfirmation_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function PopupWithDelete_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function PopupWithConfirmation_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function PopupWithDelete_getPrototypeOf(o) { PopupWithDelete_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return PopupWithDelete_getPrototypeOf(o); }
+function PopupWithConfirmation_getPrototypeOf(o) { PopupWithConfirmation_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return PopupWithConfirmation_getPrototypeOf(o); }
 
 
 
-var PopupWithDelete = /*#__PURE__*/function (_Popup) {
-  PopupWithDelete_inherits(PopupWithDelete, _Popup);
+var PopupWithConfirmation = /*#__PURE__*/function (_Popup) {
+  PopupWithConfirmation_inherits(PopupWithConfirmation, _Popup);
 
-  var _super = PopupWithDelete_createSuper(PopupWithDelete);
+  var _super = PopupWithConfirmation_createSuper(PopupWithConfirmation);
 
-  function PopupWithDelete(_ref) {
+  function PopupWithConfirmation(_ref) {
     var _this;
 
     var popupSelector = _ref.popupSelector;
 
-    PopupWithDelete_classCallCheck(this, PopupWithDelete);
+    PopupWithConfirmation_classCallCheck(this, PopupWithConfirmation);
 
     _this = _super.call(this, popupSelector);
     _this._form = _this._popup.querySelector('.popup__form');
@@ -586,12 +586,12 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
     return _this;
   }
 
-  PopupWithDelete_createClass(PopupWithDelete, [{
+  PopupWithConfirmation_createClass(PopupWithConfirmation, [{
     key: "setEventListeners",
     value: function setEventListeners() {
       var _this2 = this;
 
-      PopupWithDelete_get(PopupWithDelete_getPrototypeOf(PopupWithDelete.prototype), "setEventListeners", this).call(this);
+      PopupWithConfirmation_get(PopupWithConfirmation_getPrototypeOf(PopupWithConfirmation.prototype), "setEventListeners", this).call(this);
 
       this._form.addEventListener('submit', function (evt) {
         evt.preventDefault();
@@ -615,7 +615,7 @@ var PopupWithDelete = /*#__PURE__*/function (_Popup) {
     }
   }]);
 
-  return PopupWithDelete;
+  return PopupWithConfirmation;
 }(Popup);
 
 
@@ -887,7 +887,7 @@ var createCard = function createCard(item) {
 }; // удаление карточки //
 
 
-var deleteSample = new PopupWithDelete({
+var deleteSample = new PopupWithConfirmation({
   popupSelector: ".popup_delete"
 });
 deleteSample.setEventListeners(); // Создание карточки из коробки //
