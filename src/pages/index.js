@@ -111,7 +111,8 @@ profileEdit.addEventListener("click", () => {
 // Создание карточки //
 const createCard = (item) => {
   const card = new Card({
-    data: item, api,
+    data: item,
+    api,
     openPopupWithDelete: () => {
       deleteSample.setSubmitAction(_ => {
         deleteSample.renderLoadingWhileDeleting(true);
