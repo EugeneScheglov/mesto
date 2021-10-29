@@ -58,7 +58,7 @@ var Card = /*#__PURE__*/function () {
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
-    this._id = data._id;
+    this._cardId = data._id;
     this._userId = data.owner._id;
     this._myUserId = "e3d187d5758c011e9e594e63";
     this._selector = selector;
@@ -99,11 +99,11 @@ var Card = /*#__PURE__*/function () {
       this._cardTitle = this._element.querySelector(".card__info");
       this._cardLike = this._element.querySelector(".card__button-like");
       this._deleteButton = this._element.querySelector(".card__trash-button");
-      this._cardLike = this._element.querySelector('.card__like-count');
+      this._cardLikeBox = this._element.querySelector('.card__like-count');
 
       this._setEventListeners();
 
-      this._cardLike.textContent = this._likes.length;
+      this._cardLikeBox.textContent = this._likes.length;
       this._cardImage.src = this._image;
       this._cardImage.alt = this._text;
       this._cardTitle.textContent = this._text;
@@ -153,11 +153,7 @@ var Card = /*#__PURE__*/function () {
       this._cardLike.addEventListener("click", function () {
         _this4._likeHandleClick();
       });
-    } // _likeHandleClick() {
-    //   this._cardLike
-    //     .classList.toggle("card__button-like_active");
-    // }
-
+    }
   }, {
     key: "handleLikeCard",
     value: function handleLikeCard() {
@@ -166,14 +162,14 @@ var Card = /*#__PURE__*/function () {
       var likeCount = this._element.querySelector('.card__like-count');
 
       if (!likeButton.classList.contains('card__button-like_active')) {
-        this._api.like(this._id).then(function (data) {
+        this._api.like(this._cardId).then(function (data) {
           likeButton.classList.add('card__button-like_active');
           likeCount.textContent = data.likes.length;
         }).catch(function (err) {
           console.log(err);
         });
       } else {
-        this._api.dislike(this._id).then(function (data) {
+        this._api.dislike(this._cardId).then(function (data) {
           likeButton.classList.remove('card__button-like_active');
           likeCount.textContent = data.likes.length;
         }).catch(function (err) {
@@ -734,24 +730,24 @@ var Api = /*#__PURE__*/function () {
     }
   }, {
     key: "like",
-    value: function like(_id) {
-      return fetch(this._url + "/cards/likes/".concat(_id), {
+    value: function like(id) {
+      return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'PUT',
         headers: this._headers
       }).then(this._checkResponse);
     }
   }, {
     key: "dislike",
-    value: function dislike(_id) {
-      return fetch(this._url + "/cards/likes/".concat(_id), {
+    value: function dislike(id) {
+      return fetch(this._url + "/cards/likes/".concat(id), {
         method: 'DELETE',
         headers: this._headers
       }).then(this._checkResponse);
     }
   }, {
     key: "removeCard",
-    value: function removeCard(_id) {
-      return fetch(this._url + "/cards/".concat(_id), {
+    value: function removeCard(id) {
+      return fetch(this._url + "/cards/".concat(id), {
         method: 'DELETE',
         headers: this._headers
       }).then(this._checkResponse);
@@ -766,11 +762,6 @@ var Api = /*#__PURE__*/function () {
           avatar: data.userAvatar
         })
       }).then(this._checkResponse);
-    }
-  }, {
-    key: "getAllNeededData",
-    value: function getAllNeededData() {
-      return Promise.all([this.getInitialCards(), this.getUserInfo()]);
     }
   }]);
 
@@ -865,11 +856,12 @@ profileEdit.addEventListener("click", function () {
   setInfo();
   validFormProfile.resetValidation();
   profileSample.open();
-}); // Создание карточки //            <========================
+}); // Создание карточки //
 
 var createCard = function createCard(item) {
   var card = new Card({
     data: item,
+    api: api,
     openPopupWithDelete: function openPopupWithDelete() {
       deleteSample.setSubmitAction(function (_) {
         deleteSample.renderLoadingWhileDeleting(true);
@@ -887,8 +879,8 @@ var createCard = function createCard(item) {
     handleCardClick: function handleCardClick() {
       cardImagePopup.open(item);
     },
-    likeHandleClick: function likeHandleClick(_) {
-      return card.handleLikeCard();
+    likeHandleClick: function likeHandleClick() {
+      card.handleLikeCard();
     }
   }, '#element');
   return card.generate();
@@ -903,8 +895,6 @@ deleteSample.setEventListeners(); // Создание карточки из ко
 var cardList = new Section({
   renderer: function renderer(item) {
     var cardElement = createCard(item);
-    var cardLikesCount = cardElement.querySelector('.card__like-count');
-    cardLikesCount.textContent = item.likes.length;
     cardList.addItem(cardElement, 'append');
   }
 }, cardContainer); // карточки с сервера //
