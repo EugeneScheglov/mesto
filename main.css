@@ -471,6 +471,9 @@
 }
 .profile__avatar {
     position: relative;
+    width: 120px;
+    height: 120px;
+    margin: auto;
 }
 .profile__image {
     border-radius: 50%;
@@ -485,7 +488,7 @@
         margin: 0 auto;
     }
 }
-.profile__image-edit-button {
+.profile__avatar-edit-button {
     background-color: transparent;
     position: absolute;
     border: none;
@@ -500,8 +503,8 @@
     transition: .2s;
 }
 
-.profile__image-edit-button:hover {
-    background-color: rgba(0,0,0,.8);
+.profile__avatar-edit-button:hover {
+    background-color: rgba(0, 0, 0, .8);
     background-image: url(8667ac4a523e8fc42e59.svg);
     background-position: 50%;
     background-repeat: no-repeat;
