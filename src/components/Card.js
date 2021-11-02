@@ -4,15 +4,16 @@ export default class Card {
     openPopupWithDelete,
     handleCardClick,
     likeHandleClick,
-    api
+    api,
+    userId
   }, selector) {
     this._api = api;
     this._text = data.name;
     this._image = data.link;
     this._likes = data.likes;
     this._cardId = data._id;
-    this._userId = data.owner._id;
-    this._myUserId = "e3d187d5758c011e9e594e63";
+    this._ownerId = data.owner._id;
+    this._userId = userId;
     this._selector = selector;
     this.handleCardClick = handleCardClick;
     this._likeHandleClick = likeHandleClick;
@@ -20,13 +21,13 @@ export default class Card {
   }
 
   _hideDeleteButton() {
-    if (this._myUserId !== this._userId) {
+    if (this._ownerId !== this._userId) {
       this._deleteButton.hidden = true;
     }
   }
 
   _hideLikeButton() {
-    if (this._likes.find((obj) => this._myUserId === obj._id)) {
+    if (this._likes.find((Obj) => this._userId === Obj._id)) {
       this._element.querySelector('.card__button-like').classList.add('card__button-like_active');
     }
   }

@@ -10,18 +10,19 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        return {
-            profileName: this.profileTitle.innerText,
-            profileJob: this.profileSubtitle.innerText
+        this._userItems = {
+            profileName: this.profileTitle.textContent,
+            profileJob: this.profileSubtitle.textContent
         }
+        return this._userItems;
     }
 
     setUserInfo(data) {
-        this.profileTitle.innerText = data.popup_name;
-        this.profileSubtitle.innerText = data.popup_job;
+        this.profileTitle.textContent = data.userName;
+        this.profileSubtitle.textContent = data.userAbout;
     }
 
-    setUserAvatar(res) {
-        this.profileImage.src = res.avatar;
-      }
+    setUserAvatar(data) {
+        this.profileImage.src = data.avatar;
+    }
 }

@@ -27,13 +27,13 @@ export default class Api {
             .then(this._checkResponse)
     }
 
-    updateUserInfo(name, about) {
+    setUserInfo(userData) {
         return fetch(this._url + '/users/me', {
                 method: 'PATCH',
                 headers: this._headers,
                 body: JSON.stringify({
-                    name: name.textContent,
-                    about: about.textContent
+                    name: userData.userName,
+                    about: userData.userAbout
                 })
             })
             .then(this._checkResponse)
@@ -86,4 +86,8 @@ export default class Api {
             })
             .then(this._checkResponse)
     }
+
+    getAllNeededData() {
+    return Promise.all([this.getInitialCards(), this.getUserInfo()])
+  }
 }
