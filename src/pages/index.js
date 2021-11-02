@@ -23,9 +23,6 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import './index.css';
-import {
-  data
-} from "jquery";
 
 // API //
 const api = new Api({
@@ -40,9 +37,9 @@ const api = new Api({
 let userId
 // Возвращает результат нужных промисов //
 api.getAllNeededData()
-  .then(([cards, userItems]) => {
-    userInfo.getUserInfo(userItems);
-    userId = userItems._id;
+  .then(([cards, userData]) => {
+    userInfo.getUserInfo(userData);
+    userId = userData._id;
 
     // Установка данных профиля//
     api.getUserInfo()
