@@ -10,16 +10,17 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        this._userItems = {
+        this._userData = {
             profileName: this.profileTitle.textContent,
-            profileJob: this.profileSubtitle.textContent
+            profileJob: this.profileSubtitle.textContent,
         }
-        return this._userItems;
+        return this._userData;
     }
 
     setUserInfo(data) {
-        this.profileTitle.textContent = data.userName;
-        this.profileSubtitle.textContent = data.userAbout;
+        this.profileTitle.textContent = data.name;
+        this.profileSubtitle.textContent = data.about;
+        this.setUserAvatar(data);
     }
 
     setUserAvatar(data) {

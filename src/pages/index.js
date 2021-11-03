@@ -38,17 +38,9 @@ let userId
 // Возвращает результат нужных промисов //
 api.getAllNeededData()
   .then(([cards, userData]) => {
-    userInfo.getUserInfo(userData);
     userId = userData._id;
-
-    // Установка данных профиля//
-    api.getUserInfo()
-      .then(data => {
-        profileName.textContent = data.name;
-        profileJob.textContent = data.about;
-        profileAvatar.src = data.avatar;
-      });
-
+    
+    userInfo.setUserInfo(userData);
     cardList.renderItems(cards);
   })
   .catch((err) => console.log(err));
@@ -68,7 +60,6 @@ const setInfo = () => {
   jobInput.value = userItems.profileJob;
 }
 
-
 //////////////////////////////////////////////////
 
 // Образец Avatarа //
@@ -78,14 +69,14 @@ const avatarSample = new PopupWithForm({
     avatarSample.renderLoading(true);
     api.handleUserAvatar(data)
       .then((data) => {
-        userInfo.setUserAvatar(data)
-        avatarSample.close()
+        userInfo.setUserAvatar(data);
+        avatarSample.close();
       })
       .catch((err) => console.log(err))
       .finally(_ => avatarSample.renderLoading(false))
   }
 });
-avatarSample.setEventListeners()
+avatarSample.setEventListeners();
 avatarEditButton.addEventListener("click", function (evt) {
   validFormAvatar.resetValidation();
   avatarSample.open();
@@ -98,10 +89,10 @@ const profileSample = new PopupWithForm({
   popupSelector: '.popup_profile',
   handleSubmitForm: (data) => {
     profileSample.renderLoading(true);
-    userInfo.setUserInfo(data);
+    userInfo.getUserInfo(data);
     api.setUserInfo(data)
       .then((data) => {
-        userInfo.getUserInfo(data);
+        userInfo.setUserInfo(data);
         profileSample.close();
       })
       .catch((err) => console.log(err))
@@ -126,15 +117,6 @@ const cardList = new Section({
 }, cardContainer);
 
 //////////////////////////////////////////////////
-
-// карточки с сервера //
-api.getInitialCards()
-  .then(arrayCards => {
-    cardList.renderItems(arrayCards);
-  })
-  .catch(err => {
-    console.error(err);
-  });
 
 // Коробка карточки //
 const createCard = (item) => {
@@ -164,6 +146,7 @@ const createCard = (item) => {
   }, '#element');
   return card.generate();
 };
+
 //////////////////////////////////////////////////
 
 // Образец с картинкой //
